@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Préstamos – EduCrédito EC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/buttons.css" />
+  <link rel="stylesheet" href="../css/cards.css" />
+  <link rel="stylesheet" href="../css/tables.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/utilities.css" />
+</head>
+<body class="dashboard-body">
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <a href="dashboard.html" class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="sidebar-logo-text"><div class="sidebar-logo-name"><span class="edu">Edu</span><span class="cred">Crédito</span></div><div class="sidebar-logo-sub">Plataforma UTB</div></div>
+  </a>
+  <div class="sidebar-nav-wrapper">
+    <div class="sidebar-section-label">Principal</div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"    class="sidebar-link"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
+      <li><a href="loan-request.html" class="sidebar-link"><i class="fa-solid fa-hand-holding-dollar"></i><span>Solicitar Crédito</span></a></li>
+      <li><a href="loans.html"        class="sidebar-link active"><i class="fa-solid fa-list-check"></i><span>Mis Préstamos</span></a></li>
+      <li><a href="payments.html"     class="sidebar-link"><i class="fa-solid fa-money-bill-wave"></i><span>Realizar Pago</span></a></li>
+      <li><a href="simulator.html"    class="sidebar-link"><i class="fa-solid fa-calculator"></i><span>Simulador</span></a></li>
+    </ul>
+    <div class="sidebar-section-label">Cuenta</div>
+    <ul class="sidebar-nav">
+
+      <li><a href="profile.html"       class="sidebar-link"><i class="fa-solid fa-circle-user"></i><span>Mi Perfil</span></a></li>
+      <li><a href="#" class="sidebar-link logout-link" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-user"><div class="sidebar-user-avatar" id="sidebarAvatar">EC</div><div class="sidebar-user-info"><div class="sidebar-user-name" id="sidebarName">Estudiante</div><div class="sidebar-user-role">Estudiante UTB</div></div></div>
+</aside>
+
+<div class="main-content" id="mainContent">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <div><div class="topbar-page-title">Mis Préstamos</div><div class="topbar-breadcrumb">Dashboard › Préstamos</div></div>
+    </div>
+    <div class="topbar-right">
+      <a href="loan-request.html" class="btn-primary-custom" style="font-size:13px;padding:8px 16px;text-decoration:none;"><i class="fa-solid fa-plus me-1"></i>Nuevo crédito</a>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="content-header">
+      <h1 class="content-title">Mis Préstamos</h1>
+      <p class="content-subtitle">Historial completo de tus créditos solicitados.</p>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="filter-tabs mb-4">
+      <button class="filter-tab active" onclick="filtrarPrestamos(this,'')">Todos</button>
+      <button class="filter-tab" onclick="filtrarPrestamos(this,'Pendiente')">Pendiente</button>
+      <button class="filter-tab" onclick="filtrarPrestamos(this,'Activo')">Activo</button>
+      <button class="filter-tab" onclick="filtrarPrestamos(this,'Pagado')">Pagado</button>
+      <button class="filter-tab" onclick="filtrarPrestamos(this,'Vencido')">Vencido</button>
+      <button class="filter-tab" onclick="filtrarPrestamos(this,'Rechazado')">Rechazado</button>
+    </div>
+
+    <div class="table-wrapper">
+      <div class="table-scroll">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>#ID</th><th>Monto</th><th>Plazo</th><th>Interés</th>
+              <th>Total</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="loansBody"></tbody>
+        </table>
+      </div>
+      <div class="table-empty" id="loansEmpty" style="display:none;">
+        <i class="fa-solid fa-file-circle-xmark"></i>
+        <h4>Sin préstamos</h4>
+        <p>Aún no has realizado ninguna solicitud de crédito.</p>
+        <a href="loan-request.html" class="btn-primary-custom mt-2" style="font-size:13px;padding:10px 20px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+          <i class="fa-solid fa-plus"></i>Solicitar ahora
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="dashboard-footer">EduCrédito EC · Universidad Técnica de Babahoyo · 2026</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+<script>
+  if (typeof EduUtils !== 'undefined') EduUtils.checkSession();
+  const BADGES = {
+    Pendiente:'<span class="badge-status badge-pendiente">Pendiente</span>',
+    Activo:'<span class="badge-status badge-activo">Activo</span>',
+    Pagado:'<span class="badge-status badge-pagado">Pagado</span>',
+    Vencido:'<span class="badge-status badge-vencido">Vencido</span>',
+    Rechazado:'<span class="badge-status badge-rechazado">Rechazado</span>',
+    'En mora':'<span class="badge-status badge-mora">En mora</span>',
+    Cancelado:'<span class="badge-status badge-cancelado">Cancelado</span>',
+  };
+  let allLoans = [];
+  
+  async function cargarPrestamos(filtro='') {
+    const tbody = document.getElementById('loansBody');
+    const emptyEl = document.getElementById('loansEmpty');
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4"><i class="fa-solid fa-spinner fa-spin me-2"></i>Cargando préstamos...</td></tr>';
+    
+    const user = EduUtils.getFromStorage('educredito_user') || {};
+    allLoans = await EduAPI.get('Prestamos', { id_estudiante: user.id });
+    if (!Array.isArray(allLoans)) allLoans = [];
+    
+    // Sort by fecha_solicitud descending (assuming recent first)
+    allLoans.reverse();
+
+    let lista = filtro ? allLoans.filter(l=>l.estado===filtro) : allLoans;
+    if (lista.length === 0) {
+      tbody.innerHTML = ''; emptyEl.style.display='block'; return;
+    }
+    emptyEl.style.display='none';
+    tbody.innerHTML = lista.map(l=>`
+      <tr>
+        <td><span style="font-size:11px;color:#9CA3AF;font-family:monospace;">#${l.id.toUpperCase()}</span></td>
+        <td style="font-weight:700;color:#0F8B6D;font-size:15px;">$${parseFloat(l.monto).toFixed(2)}</td>
+        <td>${l.plazo} días · ${l.tasa}%</td>
+        <td style="color:#F59E0B;">$${parseFloat(l.interes).toFixed(2)}</td>
+        <td style="font-weight:700;">$${parseFloat(l.total).toFixed(2)}</td>
+        <td>${l.fechaVencimiento}</td>
+        <td>${BADGES[l.estado]||l.estado}</td>
+        <td>
+          <div class="table-actions">
+            ${l.estado==='Activo'||l.estado==='Vencido' ? `<a href="payments.html" class="action-btn action-btn-approve" title="Pagar"><i class="fa-solid fa-money-bill-wave"></i></a>` : ''}
+            ${l.estado==='Pendiente' ? `<button class="action-btn action-btn-reject" title="Cancelar" onclick="cancelarPrestamo('${l.id}')"><i class="fa-solid fa-xmark"></i></button>` : ''}
+            <button class="action-btn action-btn-view" title="Ver detalle" onclick="verDetalle('${l.id}')"><i class="fa-solid fa-eye"></i></button>
+          </div>
+        </td>
+      </tr>`).join('');
+  }
+  function filtrarPrestamos(btn, estado) {
+    document.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    cargarPrestamos(estado);
+  }
+  function verDetalle(id) {
+    const l = allLoans.find(x=>x.id===id);
+    if (!l) return;
+    Swal.fire({
+      title: `Crédito #${l.id.toUpperCase()}`,
+      html: `
+        <div style="text-align:left;font-size:13px;font-family:Poppins,sans-serif;">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F3F4F6;"><span style="color:#6B7280;">Monto:</span><strong>$${parseFloat(l.monto).toFixed(2)}</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F3F4F6;"><span style="color:#6B7280;">Interés (${l.tasa}%):</span><strong>$${parseFloat(l.interes).toFixed(2)}</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F3F4F6;"><span style="color:#6B7280;">Total:</span><strong style="color:#2563EB;">$${parseFloat(l.total).toFixed(2)}</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F3F4F6;"><span style="color:#6B7280;">Plazo:</span><strong>${l.plazo} días</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F3F4F6;"><span style="color:#6B7280;">Motivo:</span><strong>${l.motivo||'—'}</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F3F4F6;"><span style="color:#6B7280;">Garante:</span><strong>${l.garante||'—'}</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F3F4F6;"><span style="color:#6B7280;">Solicitud:</span><strong>${l.fecha_solicitud}</strong></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:#6B7280;">Vencimiento:</span><strong style="color:#EF4444;">${l.fecha_vencimiento || l.fechaVencimiento || '—'}</strong></div>
+        </div>`,
+      confirmButtonText: 'Cerrar',
+      confirmButtonColor: '#2563EB',
+    });
+  }
+  function cancelarPrestamo(id) {
+    Swal.fire({
+      title: '¿Cancelar solicitud?',
+      text: '¿Estás seguro de que deseas cancelar esta solicitud de crédito?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'Volver',
+      confirmButtonColor: '#EF4444'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({ title: 'Procesando...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+        
+        await EduAPI.patch('Prestamos', id, { estado: 'Cancelado' });
+
+        const btnActivo = document.querySelector('.filter-tab.active');
+        filtrarPrestamos(btnActivo, btnActivo.textContent === 'Todos' ? '' : btnActivo.textContent);
+
+        if (typeof EduNotifications !== 'undefined') {
+          EduNotifications.agregar('Solicitud cancelada', `Cancelaste tu solicitud #${id.toUpperCase()}.`, 'warning');
+        }
+        Swal.fire({ title: 'Cancelada', text: 'La solicitud ha sido cancelada exitosamente.', icon: 'success', confirmButtonColor: '#0F8B6D' });
+      }
+    });
+  }
+  function toggleSidebar() {
+    const sb=document.getElementById('sidebar'); sb.classList.toggle('mobile-open'); sb.classList.toggle('collapsed');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+    document.getElementById('mainContent').classList.toggle('sidebar-collapsed-layout');
+  }
+  document.addEventListener('DOMContentLoaded', ()=>{ cargarPrestamos(); EduNotifications?.actualizarBadge(); });
+</script>
+</body>
+</html>

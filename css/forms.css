@@ -1,0 +1,742 @@
+/* ============================================================
+   EduCrédito EC — Design System
+   FILE: forms.css
+   PURPOSE: Form controls, input groups, validation states,
+            password strength, multi-step progress, dropzone,
+            custom checkbox/radio
+   ============================================================ */
+
+/* ============================================================
+   BASE FORM LAYOUT
+   ============================================================ */
+.form-group-custom {
+  margin-bottom:  var(--space-5);
+  position:       relative;
+}
+
+.form-label-custom {
+  display:        block;
+  font-size:      var(--font-size-sm);
+  font-weight:    var(--font-weight-semibold);
+  color:          var(--color-text-primary);
+  margin-bottom:  var(--space-1-5);
+  letter-spacing: 0.01em;
+}
+
+.form-label-custom .required-asterisk {
+  color:        var(--color-error);
+  margin-left:  var(--space-0-5);
+  font-weight:  var(--font-weight-bold);
+}
+
+.form-hint {
+  display:    block;
+  font-size:  var(--font-size-xs);
+  color:      var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* ============================================================
+   BASE INPUT / TEXTAREA / SELECT
+   ============================================================ */
+.form-control-custom {
+  display:          block;
+  width:            100%;
+  height:           var(--input-height);        /* 2.75rem */
+  padding:          var(--input-padding);       /* 0.625rem 1rem */
+  font-family:      var(--font-family-base);
+  font-size:        var(--input-font-size);     /* 0.9375rem */
+  font-weight:      var(--font-weight-regular);
+  color:            var(--color-text-primary);
+  background-color: var(--color-bg-surface);
+  border:           1.5px solid var(--color-border-default);
+  border-radius:    var(--radius-input);        /* 10px */
+  outline:          none;
+  transition:       border-color var(--transition-base),
+                    box-shadow   var(--transition-base),
+                    background   var(--transition-base);
+  -webkit-appearance: none;
+  appearance:       none;
+}
+
+.form-control-custom::placeholder {
+  color:      var(--color-text-muted);
+  font-style: italic;
+}
+
+/* Focus state — blue ring */
+.form-control-custom:focus {
+  border-color: var(--color-border-focus);
+  box-shadow:   var(--shadow-focus);
+  background:   var(--color-white);
+  outline:      none;
+}
+
+/* Hover state */
+.form-control-custom:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-gray-400);
+}
+
+/* Disabled */
+.form-control-custom:disabled,
+.form-control-custom[readonly] {
+  background-color: var(--color-gray-100);
+  color:            var(--color-text-muted);
+  cursor:           not-allowed;
+  border-color:     var(--color-gray-200);
+}
+
+/* Textarea */
+textarea.form-control-custom {
+  height:      auto;
+  min-height:  7rem;
+  resize:      vertical;
+  padding-top: var(--space-3);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Select */
+select.form-control-custom {
+  background-image:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:   no-repeat;
+  background-position: right 1rem center;
+  padding-right:       2.5rem;
+  cursor:              pointer;
+}
+
+/* ============================================================
+   INPUT GROUP WITH ICON
+   ============================================================ */
+.input-group-custom {
+  position:      relative;
+  display:       flex;
+  align-items:   stretch;
+  width:         100%;
+}
+
+/* Icon slot — left */
+.input-group-custom .input-icon-left {
+  position:   absolute;
+  left:       0.875rem;
+  top:        50%;
+  transform:  translateY(-50%);
+  color:      var(--color-text-muted);
+  font-size:  1rem;
+  pointer-events: none;
+  z-index:    2;
+  transition: color var(--transition-base);
+}
+
+/* Icon slot — right (e.g., eye/password toggle) */
+.input-group-custom .input-icon-right {
+  position:  absolute;
+  right:     0.875rem;
+  top:       50%;
+  transform: translateY(-50%);
+  color:     var(--color-text-muted);
+  font-size: 1rem;
+  z-index:   2;
+  cursor:    pointer;
+  transition: color var(--transition-base);
+  background: none;
+  border:     none;
+  padding:    0;
+  display:    flex;
+  align-items: center;
+}
+
+.input-group-custom .input-icon-right:hover {
+  color: var(--color-text-primary);
+}
+
+/* Input adjustments when icon is present */
+.input-group-custom .has-icon-left {
+  padding-left: 2.75rem;
+}
+
+.input-group-custom .has-icon-right {
+  padding-right: 2.75rem;
+}
+
+/* Focus → icon turns primary color */
+.input-group-custom:focus-within .input-icon-left {
+  color: var(--color-blue-primary);
+}
+
+/* Prepend/Append addons */
+.input-addon {
+  display:         flex;
+  align-items:     center;
+  padding:         0 var(--space-3);
+  background:      var(--color-gray-100);
+  border:          1.5px solid var(--color-border-default);
+  color:           var(--color-text-secondary);
+  font-size:       var(--font-size-sm);
+  font-weight:     var(--font-weight-medium);
+  white-space:     nowrap;
+  flex-shrink:     0;
+}
+
+.input-addon-left {
+  border-right:  none;
+  border-radius: var(--radius-input) 0 0 var(--radius-input);
+}
+
+.input-addon-right {
+  border-left:   none;
+  border-radius: 0 var(--radius-input) var(--radius-input) 0;
+}
+
+.input-group-custom .input-addon-left ~ .form-control-custom {
+  border-radius: 0 var(--radius-input) var(--radius-input) 0;
+}
+
+.input-group-custom .form-control-custom:has(+ .input-addon-right) {
+  border-radius: var(--radius-input) 0 0 var(--radius-input);
+}
+
+/* ============================================================
+   VALIDATION STATES — Error
+   ============================================================ */
+.form-control-custom.is-invalid,
+.form-group-custom.has-error .form-control-custom {
+  border-color: var(--color-border-error);
+  box-shadow:   0 0 0 3px rgba(239, 68, 68, 0.15);
+  animation:    shake 0.35s ease;
+}
+
+.form-control-custom.is-invalid:focus,
+.form-group-custom.has-error .form-control-custom:focus {
+  border-color: var(--color-border-error);
+  box-shadow:   0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+.form-error-msg {
+  display:      block;
+  font-size:    var(--font-size-xs);
+  font-weight:  var(--font-weight-medium);
+  color:        var(--color-error);
+  margin-top:   var(--space-1);
+  display:      flex;
+  align-items:  center;
+  gap:          var(--space-1);
+}
+
+/* Shake animation for invalid inputs */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* ============================================================
+   VALIDATION STATES — Success
+   ============================================================ */
+.form-control-custom.is-valid,
+.form-group-custom.has-success .form-control-custom {
+  border-color: var(--color-border-success);
+  box-shadow:   0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+.form-control-custom.is-valid:focus,
+.form-group-custom.has-success .form-control-custom:focus {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+.form-success-msg {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-1);
+  font-size:   var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color:       var(--color-success);
+  margin-top:  var(--space-1);
+}
+
+/* ============================================================
+   PASSWORD STRENGTH BAR
+   ============================================================ */
+.password-strength-wrap {
+  margin-top: var(--space-2);
+}
+
+.password-strength-bar {
+  display:       flex;
+  gap:           var(--space-1);
+  margin-bottom: var(--space-1-5);
+}
+
+.password-strength-bar .strength-segment {
+  flex:          1;
+  height:        4px;
+  background:    var(--color-gray-200);
+  border-radius: var(--radius-pill);
+  transition:    background var(--transition-medium);
+}
+
+/* Strength levels — add class to .password-strength-bar */
+.password-strength-bar.strength-1 .strength-segment:nth-child(1)                       { background: var(--color-error); }
+.password-strength-bar.strength-2 .strength-segment:nth-child(-n+2)                     { background: var(--color-warning); }
+.password-strength-bar.strength-3 .strength-segment:nth-child(-n+3)                     { background: var(--color-info); }
+.password-strength-bar.strength-4 .strength-segment                                     { background: var(--color-success); }
+
+.password-strength-label {
+  font-size:   var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.password-strength-label.label-1 { color: var(--color-error); }
+.password-strength-label.label-2 { color: var(--color-warning); }
+.password-strength-label.label-3 { color: var(--color-info); }
+.password-strength-label.label-4 { color: var(--color-success); }
+
+/* ============================================================
+   MULTI-STEP PROGRESS BAR
+   ============================================================ */
+.step-progress {
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  margin-bottom:  var(--space-8);
+  position:       relative;
+}
+
+.step-progress-item {
+  display:      flex;
+  flex-direction: column;
+  align-items:  center;
+  position:     relative;
+  flex:         1;
+}
+
+/* Connector line between steps */
+.step-progress-item:not(:last-child)::after {
+  content:    '';
+  position:   absolute;
+  top:        1.25rem;   /* center of the step circle */
+  left:       50%;
+  width:      100%;
+  height:     2px;
+  background: var(--color-gray-200);
+  z-index:    0;
+  transition: background var(--transition-medium);
+}
+
+.step-progress-item.completed:not(:last-child)::after {
+  background: var(--color-primary-green);
+}
+
+/* Step circle */
+.step-circle {
+  width:         2.5rem;
+  height:        2.5rem;
+  border-radius: var(--radius-circle);
+  border:        2px solid var(--color-gray-300);
+  background:    var(--color-bg-surface);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     var(--font-size-sm);
+  font-weight:   var(--font-weight-bold);
+  color:         var(--color-text-muted);
+  position:      relative;
+  z-index:       1;
+  transition:    all var(--transition-medium);
+}
+
+.step-progress-item.active .step-circle {
+  border-color: var(--color-blue-primary);
+  background:   var(--color-blue-primary);
+  color:        var(--color-white);
+  box-shadow:   var(--shadow-blue);
+}
+
+.step-progress-item.completed .step-circle {
+  border-color: var(--color-primary-green);
+  background:   var(--color-primary-green);
+  color:        var(--color-white);
+}
+
+.step-label {
+  font-size:   var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color:       var(--color-text-muted);
+  margin-top:  var(--space-2);
+  text-align:  center;
+  white-space: nowrap;
+}
+
+.step-progress-item.active .step-label {
+  color:       var(--color-blue-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.step-progress-item.completed .step-label {
+  color: var(--color-primary-green);
+}
+
+/* ============================================================
+   FILE UPLOAD DROPZONE
+   ============================================================ */
+.dropzone-custom {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--space-3);
+  padding:         var(--space-10) var(--space-6);
+  border:          2px dashed var(--color-gray-300);
+  border-radius:   var(--radius-card);
+  background:      var(--color-gray-50);
+  cursor:          pointer;
+  text-align:      center;
+  transition:      border-color  var(--transition-base),
+                   background    var(--transition-base),
+                   box-shadow    var(--transition-base);
+  position:        relative;
+}
+
+.dropzone-custom input[type="file"] {
+  position:      absolute;
+  inset:         0;
+  opacity:       0;
+  cursor:        pointer;
+  width:         100%;
+  height:        100%;
+}
+
+.dropzone-custom:hover,
+.dropzone-custom.drag-over {
+  border-color: var(--color-blue-primary);
+  background:   var(--color-blue-light);
+  box-shadow:   var(--shadow-focus);
+}
+
+.dropzone-custom .dropzone-icon {
+  font-size:   2.5rem;
+  color:       var(--color-gray-400);
+  transition:  color var(--transition-base);
+}
+
+.dropzone-custom:hover .dropzone-icon,
+.dropzone-custom.drag-over .dropzone-icon {
+  color: var(--color-blue-primary);
+}
+
+.dropzone-custom .dropzone-title {
+  font-size:   var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color:       var(--color-text-primary);
+}
+
+.dropzone-custom .dropzone-subtitle {
+  font-size: var(--font-size-sm);
+  color:     var(--color-text-muted);
+}
+
+.dropzone-custom .dropzone-browse {
+  color:       var(--color-blue-primary);
+  font-weight: var(--font-weight-semibold);
+  cursor:      pointer;
+}
+
+.dropzone-custom .dropzone-hint {
+  font-size: var(--font-size-xs);
+  color:     var(--color-text-muted);
+}
+
+/* File preview list */
+.file-list-custom {
+  margin-top:  var(--space-3);
+  list-style:  none;
+  padding:     0;
+}
+
+.file-list-custom li {
+  display:         flex;
+  align-items:     center;
+  gap:             var(--space-3);
+  padding:         var(--space-2) var(--space-3);
+  border-radius:   var(--radius-base);
+  background:      var(--color-gray-50);
+  border:          1px solid var(--color-border-default);
+  margin-bottom:   var(--space-2);
+  font-size:       var(--font-size-sm);
+}
+
+.file-list-custom li .file-name {
+  flex:        1;
+  color:       var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+  overflow:    hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-list-custom li .file-size {
+  color:       var(--color-text-muted);
+  font-size:   var(--font-size-xs);
+  flex-shrink: 0;
+}
+
+.file-list-custom li .file-remove {
+  color:     var(--color-error);
+  cursor:    pointer;
+  flex-shrink: 0;
+  background: none;
+  border:     none;
+  padding:    0;
+  font-size:  1rem;
+  line-height: 1;
+}
+
+/* ============================================================
+   CUSTOM CHECKBOX
+   ============================================================ */
+.checkbox-custom {
+  display:      flex;
+  align-items:  flex-start;
+  gap:          var(--space-2-5);
+  cursor:       pointer;
+  user-select:  none;
+  position:     relative;
+}
+
+.checkbox-custom input[type="checkbox"] {
+  position:   absolute;
+  opacity:    0;
+  width:      0;
+  height:     0;
+}
+
+.checkbox-custom .checkbox-box {
+  width:         1.25rem;
+  height:        1.25rem;
+  border:        2px solid var(--color-gray-300);
+  border-radius: 5px;
+  background:    var(--color-bg-surface);
+  flex-shrink:   0;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  transition:    border-color var(--transition-base),
+                 background   var(--transition-base),
+                 box-shadow   var(--transition-base);
+  margin-top:    0.1rem;
+}
+
+/* Checkmark via SVG background */
+.checkbox-custom .checkbox-box::after {
+  content:   '';
+  display:   none;
+  width:     0.35rem;
+  height:    0.6rem;
+  border:    2px solid var(--color-white);
+  border-top:  none;
+  border-left: none;
+  transform:   rotate(42deg) translateY(-1px);
+}
+
+.checkbox-custom input[type="checkbox"]:checked ~ .checkbox-box {
+  background:   var(--color-blue-primary);
+  border-color: var(--color-blue-primary);
+  box-shadow:   var(--shadow-focus);
+}
+
+.checkbox-custom input[type="checkbox"]:checked ~ .checkbox-box::after {
+  display: block;
+}
+
+.checkbox-custom input[type="checkbox"]:focus-visible ~ .checkbox-box {
+  box-shadow: var(--shadow-focus);
+}
+
+.checkbox-custom .checkbox-label {
+  font-size:   var(--font-size-sm);
+  color:       var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Green checkbox variant */
+.checkbox-custom.checkbox-success input[type="checkbox"]:checked ~ .checkbox-box {
+  background:   var(--color-primary-green);
+  border-color: var(--color-primary-green);
+  box-shadow:   0 0 0 3px rgba(15, 139, 109, 0.2);
+}
+
+/* ============================================================
+   CUSTOM RADIO BUTTON
+   ============================================================ */
+.radio-custom {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--space-2-5);
+  cursor:      pointer;
+  user-select: none;
+  position:    relative;
+}
+
+.radio-custom input[type="radio"] {
+  position: absolute;
+  opacity:  0;
+  width:    0;
+  height:   0;
+}
+
+.radio-custom .radio-circle {
+  width:         1.25rem;
+  height:        1.25rem;
+  border:        2px solid var(--color-gray-300);
+  border-radius: var(--radius-circle);
+  background:    var(--color-bg-surface);
+  flex-shrink:   0;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  transition:    border-color var(--transition-base),
+                 background   var(--transition-base),
+                 box-shadow   var(--transition-base);
+  margin-top:    0.1rem;
+}
+
+.radio-custom .radio-circle::after {
+  content:       '';
+  width:         0.45rem;
+  height:        0.45rem;
+  background:    var(--color-white);
+  border-radius: var(--radius-circle);
+  opacity:       0;
+  transform:     scale(0);
+  transition:    opacity var(--transition-base),
+                 transform var(--transition-bounce);
+}
+
+.radio-custom input[type="radio"]:checked ~ .radio-circle {
+  background:   var(--color-blue-primary);
+  border-color: var(--color-blue-primary);
+  box-shadow:   var(--shadow-focus);
+}
+
+.radio-custom input[type="radio"]:checked ~ .radio-circle::after {
+  opacity:   1;
+  transform: scale(1);
+}
+
+.radio-custom input[type="radio"]:focus-visible ~ .radio-circle {
+  box-shadow: var(--shadow-focus);
+}
+
+.radio-custom .radio-label {
+  font-size:   var(--font-size-sm);
+  color:       var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ============================================================
+   RANGE / SLIDER INPUT
+   ============================================================ */
+.range-custom {
+  -webkit-appearance: none;
+  appearance:  none;
+  width:       100%;
+  height:      6px;
+  border-radius: var(--radius-pill);
+  background:  var(--color-gray-200);
+  outline:     none;
+  cursor:      pointer;
+}
+
+.range-custom::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance:  none;
+  width:       20px;
+  height:      20px;
+  border-radius: var(--radius-circle);
+  background:  var(--color-blue-primary);
+  cursor:      pointer;
+  box-shadow:  var(--shadow-sm);
+  border:      3px solid var(--color-white);
+  transition:  background var(--transition-base),
+               transform  var(--transition-base);
+}
+
+.range-custom::-webkit-slider-thumb:hover {
+  background:  var(--color-blue-hover);
+  transform:   scale(1.15);
+}
+
+.range-custom::-moz-range-thumb {
+  width:         14px;
+  height:        14px;
+  border-radius: var(--radius-circle);
+  background:    var(--color-blue-primary);
+  cursor:        pointer;
+  border:        3px solid var(--color-white);
+}
+
+/* ============================================================
+   FLOATING LABEL (Material-style)
+   ============================================================ */
+.form-floating-custom {
+  position: relative;
+}
+
+.form-floating-custom .form-control-custom {
+  padding-top: 1.375rem;
+  padding-bottom: 0.375rem;
+}
+
+.form-floating-custom label {
+  position:     absolute;
+  top:          50%;
+  left:         1rem;
+  transform:    translateY(-50%);
+  font-size:    var(--font-size-base);
+  color:        var(--color-text-muted);
+  pointer-events: none;
+  transition:   top var(--transition-base),
+                font-size var(--transition-base),
+                color var(--transition-base);
+  transform-origin: left top;
+}
+
+.form-floating-custom .form-control-custom:focus ~ label,
+.form-floating-custom .form-control-custom:not(:placeholder-shown) ~ label {
+  top:       0.5rem;
+  font-size: var(--font-size-xs);
+  color:     var(--color-blue-primary);
+  transform: translateY(0);
+}
+
+/* ============================================================
+   FORM CARD WRAPPER (groups fields in card)
+   ============================================================ */
+.form-card-custom {
+  background:    var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow:    var(--shadow-base);
+  border:        1px solid var(--color-border-default);
+  padding:       var(--space-8);
+}
+
+.form-card-custom .form-card-title {
+  font-size:     var(--font-size-xl);
+  font-weight:   var(--font-weight-bold);
+  color:         var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-border-default);
+}
+
+.form-section-title {
+  font-size:      var(--font-size-sm);
+  font-weight:    var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color:          var(--color-text-secondary);
+  margin-bottom:  var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom:  1px solid var(--color-border-default);
+}

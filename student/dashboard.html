@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Estudiante – EduCrédito EC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/buttons.css" />
+  <link rel="stylesheet" href="../css/cards.css" />
+  <link rel="stylesheet" href="../css/tables.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/utilities.css" />
+</head>
+<body class="dashboard-body">
+
+<!-- ── Sidebar overlay ───────────────────────────── -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- ══════════════════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <!-- Logo -->
+  <a href="dashboard.html" class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="sidebar-logo-text">
+      <div class="sidebar-logo-name"><span class="edu">Edu</span><span class="cred">Crédito</span></div>
+      <div class="sidebar-logo-sub">Plataforma UTB</div>
+    </div>
+  </a>
+
+  <!-- Nav -->
+  <div class="sidebar-nav-wrapper">
+    <div class="sidebar-section-label">Principal</div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"      class="sidebar-link active" id="nav-dashboard"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
+      <li><a href="loan-request.html"   class="sidebar-link"        id="nav-loan"><i class="fa-solid fa-hand-holding-dollar"></i><span>Solicitar Crédito</span></a></li>
+      <li><a href="loans.html"          class="sidebar-link"        id="nav-loans"><i class="fa-solid fa-list-check"></i><span>Mis Préstamos</span></a></li>
+      <li><a href="payments.html"       class="sidebar-link"        id="nav-payments"><i class="fa-solid fa-money-bill-wave"></i><span>Realizar Pago</span></a></li>
+      <li><a href="simulator.html"      class="sidebar-link"        id="nav-sim"><i class="fa-solid fa-calculator"></i><span>Simulador</span></a></li>
+    </ul>
+
+    <div class="sidebar-section-label">Cuenta</div>
+    <ul class="sidebar-nav">
+
+      <li><a href="profile.html"        class="sidebar-link"        id="nav-profile"><i class="fa-solid fa-circle-user"></i><span>Mi Perfil</span></a></li>
+      <li><a href="#"                   class="sidebar-link logout-link" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></a></li>
+    </ul>
+  </div>
+
+  <!-- User footer -->
+  <div class="sidebar-user">
+    <div class="sidebar-user-avatar" id="sidebarAvatar">EC</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" id="sidebarName">Estudiante</div>
+      <div class="sidebar-user-role">Estudiante UTB</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════ -->
+<div class="main-content" id="mainContent">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <div>
+        <div class="topbar-page-title">Dashboard</div>
+        <div class="topbar-breadcrumb">Panel del Estudiante</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="position-relative dropdown">
+        <button class="topbar-bell" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notification-badge" style="display:none;">0</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-end shadow" style="width:320px;border:none;border-radius:14px;padding:0;overflow:hidden;margin-top:8px;">
+          <div class="d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+            <strong style="font-size:13px;">Notificaciones</strong>
+            <button onclick="EduNotifications.marcarTodasLeidas();this.closest('.dropdown-menu').querySelector('#notifDropBody').innerHTML=''" class="btn btn-sm" style="font-size:11px;color:#6B7280;">Marcar todas leídas</button>
+          </div>
+          <div id="notifDropBody"></div>
+          <div class="p-2 border-top text-center">
+            <a href="notifications.html" style="font-size:12px;color:#2563EB;text-decoration:none;">Ver todas</a>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-user dropdown" data-bs-toggle="dropdown">
+        <div class="topbar-user-avatar" id="topbarAvatar">EC</div>
+        <div>
+          <div class="topbar-user-name" id="topbarName">Estudiante</div>
+          <div class="topbar-user-role">Cuenta estudiantil</div>
+        </div>
+        <i class="fa-solid fa-chevron-down topbar-user-caret"></i>
+        <ul class="dropdown-menu dropdown-menu-end shadow" style="border:none;border-radius:12px;min-width:180px;margin-top:8px;">
+          <li><a class="dropdown-item" href="profile.html"><i class="fa-solid fa-user me-2 text-primary"></i>Mi perfil</a></li>
+          <li><a class="dropdown-item" href="notifications.html"><i class="fa-solid fa-bell me-2 text-warning"></i>Notificaciones</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="#" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket me-2"></i>Cerrar sesión</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content-wrapper">
+
+    <!-- Welcome -->
+    <div class="content-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <h1 class="content-title">¡Bienvenido, <span id="welcomeName" class="text-primary-custom">Estudiante</span>! 👋</h1>
+        <p class="content-subtitle">Aquí tienes el resumen de tu cuenta EduCrédito EC.</p>
+      </div>
+      <a href="loan-request.html" class="btn-primary-custom" id="btnSolicitarNuevo">
+        <i class="fa-solid fa-plus"></i> Solicitar crédito
+      </a>
+    </div>
+
+    <!-- Overdue Alert -->
+    <div class="overdue-alert" id="overdueAlert" style="display:none;">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <div class="overdue-alert-text">
+        <strong>¡Préstamo vencido!</strong> Tienes un préstamo que ya superó su fecha límite. Por favor realiza el pago lo antes posible para evitar cargos adicionales por mora.
+      </div>
+      <a href="payments.html" class="btn btn-danger btn-sm">Pagar ahora</a>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="stats-row mb-4">
+      <div class="stat-card green">
+        <div class="stat-icon green"><i class="fa-solid fa-dollar-sign"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Saldo pendiente</div>
+          <div class="stat-value" id="statSaldo">$0.00</div>
+          <div class="stat-change up"><i class="fa-solid fa-info-circle me-1"></i>Total a pagar</div>
+        </div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-icon orange"><i class="fa-solid fa-calendar-days"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Próximo vencimiento</div>
+          <div class="stat-value" id="statProximo" style="font-size:16px;">—</div>
+          <div class="stat-change"><i class="fa-regular fa-clock me-1"></i>Fecha límite</div>
+        </div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-icon blue"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Créditos activos</div>
+          <div class="stat-value" id="statActivos">0</div>
+          <div class="stat-change"><i class="fa-solid fa-circle me-1"></i>Actualmente</div>
+        </div>
+      </div>
+      <div class="stat-card green" style="--card-accent:#10B981;">
+        <div class="stat-icon" style="background:#D1FAE5;color:#059669;"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Créditos pagados</div>
+          <div class="stat-value" id="statHistorial">0</div>
+          <div class="stat-change up"><i class="fa-solid fa-thumbs-up me-1"></i>Historial</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid: Activity + Quick Actions + Chart -->
+    <div class="row g-4">
+
+      <!-- Actividad reciente -->
+      <div class="col-lg-7">
+        <div class="table-wrapper" style="padding:20px 24px;">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h3 style="font-size:15px;font-weight:700;color:var(--color-text-primary);margin:0;">
+              <i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>Actividad reciente
+            </h3>
+            <a href="loans.html" style="font-size:12px;color:#2563EB;text-decoration:none;">Ver todo →</a>
+          </div>
+          <div id="recentActivity">
+            <!-- cargado por dashboard.js -->
+            <div class="skeleton skeleton-text skeleton-w-full mb-2"></div>
+            <div class="skeleton skeleton-text skeleton-w-3-4 mb-2"></div>
+            <div class="skeleton skeleton-text skeleton-w-full"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel derecho -->
+      <div class="col-lg-5 d-flex flex-column gap-4">
+
+        <!-- Próximo pago -->
+        <div class="table-wrapper" style="padding:20px 24px;">
+          <h3 style="font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:14px;">
+            <i class="fa-solid fa-wallet me-2 text-warning"></i>Próximo pago
+          </h3>
+          <div id="nextPaymentInfo">
+            <div class="empty-state py-3">
+              <i class="fa-solid fa-circle-check" style="font-size:32px;color:#10B981;margin-bottom:10px;display:block;"></i>
+              <p class="text-muted small mb-0">Sin pagos pendientes</p>
+            </div>
+          </div>
+          <a href="payments.html" class="d-block mt-3 text-center" style="background:var(--color-success-light);border:1px solid var(--color-success-light);border-radius:10px;padding:10px;font-size:13px;font-weight:600;color:var(--color-success-text);text-decoration:none;">
+            <i class="fa-solid fa-money-bill-wave me-2"></i>Ir a realizar pago
+          </a>
+        </div>
+
+        <!-- Acciones rápidas -->
+        <div class="table-wrapper" style="padding:20px 24px;">
+          <h3 style="font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:14px;">
+            <i class="fa-solid fa-bolt me-2 text-warning"></i>Acciones rápidas
+          </h3>
+          <div class="d-grid gap-2">
+            <a href="loan-request.html" class="d-flex align-items-center gap-3 p-3" style="background:var(--color-info-light);border-radius:10px;border:1px solid var(--color-info-light);text-decoration:none;color:var(--color-info-text);font-size:13px;font-weight:600;transition:all .2s;">
+              <i class="fa-solid fa-hand-holding-dollar" style="font-size:18px;color:#2563EB;"></i> Solicitar crédito
+            </a>
+            <a href="simulator.html" class="d-flex align-items-center gap-3 p-3" style="background:var(--color-success-light);border-radius:10px;border:1px solid var(--color-success-light);text-decoration:none;color:var(--color-success-text);font-size:13px;font-weight:600;transition:all .2s;">
+              <i class="fa-solid fa-calculator" style="font-size:18px;color:#0F8B6D;"></i> Simular préstamo
+            </a>
+            <a href="payments.html" class="d-flex align-items-center gap-3 p-3" style="background:var(--color-warning-light);border-radius:10px;border:1px solid var(--color-warning-light);text-decoration:none;color:var(--color-warning-text);font-size:13px;font-weight:600;transition:all .2s;">
+              <i class="fa-solid fa-upload" style="font-size:18px;color:#D97706;"></i> Subir comprobante
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /row -->
+
+    <!-- Mini chart -->
+    <div class="row g-4 mt-0">
+      <div class="col-12">
+        <div class="table-wrapper" style="padding:20px 24px;">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h3 style="font-size:15px;font-weight:700;color:var(--color-text-primary);margin:0;">
+              <i class="fa-solid fa-chart-line me-2" style="color:#0F8B6D;"></i>Historial de pagos (últimos 6 meses)
+            </h3>
+          </div>
+          <canvas id="miniChart" height="80"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-wrapper -->
+
+  <footer class="dashboard-footer">
+    EduCrédito EC · Universidad Técnica de Babahoyo · 2026 · Todos los derechos reservados.
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/dashboard.js"></script>
+<script>
+  // Cargar avatar y nombre en sidebar/topbar
+  document.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('educredito_user') || '{}');
+    const initials = `${(user.nombre||'E')[0]}${(user.apellido||'C')[0]}`;
+    ['sidebarAvatar','topbarAvatar'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (user.avatar && user.avatar.startsWith('data:')) {
+        el.innerHTML = `<img src="${user.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      } else {
+        el.textContent = initials;
+      }
+    });
+    ['sidebarName','topbarName'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = (user.nombre||'Estudiante');
+    });
+    // Load notif dropdown
+    if (typeof EduNotifications !== 'undefined') {
+      EduNotifications.renderDropdown('notifDropBody');
+    }
+  });
+  function toggleSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('sidebarOverlay');
+    sb.classList.toggle('mobile-open');
+    sb.classList.toggle('collapsed');
+    ov.classList.toggle('active');
+    const mc = document.getElementById('mainContent');
+    mc.classList.toggle('sidebar-collapsed-layout');
+  }
+</script>
+</body>
+</html>

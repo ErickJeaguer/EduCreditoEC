@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realizar Pago – EduCrédito EC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/buttons.css" />
+  <link rel="stylesheet" href="../css/cards.css" />
+  <link rel="stylesheet" href="../css/tables.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <link rel="stylesheet" href="../css/utilities.css" />
+  <style>
+    .bank-info-card { background:linear-gradient(135deg,#1F2937,#374151); border-radius:16px; padding:24px; color:#fff; }
+    .bank-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.1); font-size:13px; }
+    .bank-row:last-child { border:none; }
+    .bank-label { color:rgba(255,255,255,.65); }
+    .bank-val   { font-weight:700; }
+    .dropzone { border:2.5px dashed #D1D5DB; border-radius:14px; padding:36px 20px; text-align:center; cursor:pointer; transition:all .2s; background:#FAFAFA; }
+    .dropzone:hover,.dropzone.drag-over { border-color:#2563EB; background:#F0F9FF; }
+    .dropzone i { font-size:36px; color:#9CA3AF; margin-bottom:12px; }
+    .input-pay { padding:12px 16px; border:2px solid #E5E7EB; border-radius:10px; font-size:14px; font-family:'Poppins',sans-serif; color:#1F2937; width:100%; outline:none; transition:border-color .2s; }
+    .input-pay:focus { border-color:#2563EB; box-shadow:0 0 0 4px rgba(37,99,235,.1); }
+    .label-pay { font-size:12px; font-weight:600; color:#374151; margin-bottom:6px; display:block; }
+  </style>
+</head>
+<body class="dashboard-body">
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <a href="dashboard.html" class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="sidebar-logo-text"><div class="sidebar-logo-name"><span class="edu">Edu</span><span class="cred">Crédito</span></div><div class="sidebar-logo-sub">Plataforma UTB</div></div>
+  </a>
+  <div class="sidebar-nav-wrapper">
+    <div class="sidebar-section-label">Principal</div>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"    class="sidebar-link"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
+      <li><a href="loan-request.html" class="sidebar-link"><i class="fa-solid fa-hand-holding-dollar"></i><span>Solicitar Crédito</span></a></li>
+      <li><a href="loans.html"        class="sidebar-link"><i class="fa-solid fa-list-check"></i><span>Mis Préstamos</span></a></li>
+      <li><a href="payments.html"     class="sidebar-link active"><i class="fa-solid fa-money-bill-wave"></i><span>Realizar Pago</span></a></li>
+      <li><a href="simulator.html"    class="sidebar-link"><i class="fa-solid fa-calculator"></i><span>Simulador</span></a></li>
+    </ul>
+    <div class="sidebar-section-label">Cuenta</div>
+    <ul class="sidebar-nav">
+
+      <li><a href="profile.html"       class="sidebar-link"><i class="fa-solid fa-circle-user"></i><span>Mi Perfil</span></a></li>
+      <li><a href="#" class="sidebar-link logout-link" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-user"><div class="sidebar-user-avatar" id="sidebarAvatar">EC</div><div class="sidebar-user-info"><div class="sidebar-user-name" id="sidebarName">Estudiante</div><div class="sidebar-user-role">Estudiante UTB</div></div></div>
+</aside>
+
+<div class="main-content" id="mainContent">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="sidebar-toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <div><div class="topbar-page-title">Realizar Pago</div><div class="topbar-breadcrumb">Dashboard › Pago</div></div>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="content-header">
+      <h1 class="content-title">Realizar Pago</h1>
+      <p class="content-subtitle">Sube tu comprobante de pago para que el administrador lo verifique.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-7">
+
+        <!-- Loan info -->
+        <div class="table-wrapper p-4 mb-4">
+          <h3 style="font-size:15px;font-weight:700;color:#1F2937;margin-bottom:16px;"><i class="fa-solid fa-credit-card me-2 text-primary"></i>Préstamo a pagar</h3>
+          <div id="loanInfoCard"></div>
+          <input type="hidden" id="hiddenLoanId" />
+        </div>
+
+        <!-- Payment form -->
+        <div class="table-wrapper p-4">
+          <h3 style="font-size:15px;font-weight:700;color:#1F2937;margin-bottom:20px;"><i class="fa-solid fa-upload me-2 text-success"></i>Subir comprobante</h3>
+
+          <div class="mb-3">
+            <label class="label-pay">Método de pago <span style="color:#EF4444;">*</span></label>
+            <select class="input-pay" id="metodoPago">
+              <option value="">— Selecciona el método —</option>
+              <option value="Transferencia">Transferencia bancaria</option>
+              <option value="Depósito">Depósito en ventanilla</option>
+              <option value="Efectivo">Efectivo (presencial)</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="label-pay">Número de referencia / transacción <span style="color:#EF4444;">*</span></label>
+            <input class="input-pay" type="text" id="referencia" placeholder="Ej. TRF-2026-000123" />
+          </div>
+
+          <div class="mb-3">
+            <label class="label-pay">Comprobante de pago <span style="color:#EF4444;">*</span></label>
+            <div class="dropzone" id="dropzone">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <div style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">Arrastra aquí o haz clic para seleccionar</div>
+              <div style="font-size:12px;color:#9CA3AF;">PDF, PNG, JPG, JPEG · Máximo 5 MB</div>
+              <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg" style="display:none;" />
+            </div>
+            <div id="filePreview" style="display:none;"></div>
+          </div>
+
+          <button onclick="enviarPago()" class="btn-primary-custom w-100" style="padding:14px;font-size:15px;margin-top:8px;justify-content:center;">
+            <i class="fa-solid fa-paper-plane me-2"></i>Enviar comprobante
+          </button>
+        </div>
+
+      </div>
+
+      <div class="col-lg-5 d-flex flex-column gap-4">
+        <!-- Bank info -->
+        <div>
+          <h3 style="font-size:15px;font-weight:700;color:#1F2937;margin-bottom:14px;"><i class="fa-solid fa-building-columns me-2 text-warning"></i>Datos bancarios</h3>
+          <div class="bank-info-card">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.5);margin-bottom:16px;">Banco receptor</div>
+            <div class="bank-row"><span class="bank-label">Banco</span><span class="bank-val">Banco del Pacífico</span></div>
+            <div class="bank-row"><span class="bank-label">Titular</span><span class="bank-val">EduCrédito EC · UTB</span></div>
+            <div class="bank-row"><span class="bank-label">Cuenta</span><span class="bank-val">0123456789-01</span></div>
+            <div class="bank-row"><span class="bank-label">Tipo</span><span class="bank-val">Corriente</span></div>
+            <div class="bank-row"><span class="bank-label">RUC</span><span class="bank-val">1260005320001</span></div>
+          </div>
+          <div style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:10px;padding:12px 14px;font-size:12px;color:#92400e;margin-top:12px;">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <strong>Importante:</strong> Realiza el depósito o transferencia exactamente por el monto total indicado. El comprobante debe mostrar claramente la fecha, monto y referencia.
+          </div>
+        </div>
+
+        <!-- Payment history -->
+        <div class="table-wrapper">
+          <div style="padding:16px 20px;border-bottom:1px solid #F3F4F6;">
+            <strong style="font-size:14px;">Historial de pagos</strong>
+          </div>
+          <div class="table-scroll">
+            <table class="table-custom">
+              <thead>
+                <tr><th>Fecha</th><th>Monto</th><th>Método</th><th>Referencia</th><th>Estado</th></tr>
+              </thead>
+              <tbody id="paymentsHistoryBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="dashboard-footer">EduCrédito EC · Universidad Técnica de Babahoyo · 2026</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/payments.js"></script>
+<script>
+  function toggleSidebar() {
+    const sb=document.getElementById('sidebar'); sb.classList.toggle('mobile-open'); sb.classList.toggle('collapsed');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+    document.getElementById('mainContent').classList.toggle('sidebar-collapsed-layout');
+  }
+</script>
+</body>
+</html>

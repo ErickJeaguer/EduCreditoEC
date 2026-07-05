@@ -1,0 +1,516 @@
+/* ============================================================
+   EduCrédito EC — Design System
+   FILE: cards.css
+   PURPOSE: Card components — stat, loan, glass, gradient,
+            hover effects, and color variants
+   ============================================================ */
+
+/* ============================================================
+   BASE CARD
+   ============================================================ */
+.card-custom {
+  background:    var(--color-bg-surface);
+  border-radius: var(--radius-card);       /* 16px */
+  box-shadow:    var(--shadow-base);       /* 0 10px 25px rgba(0,0,0,.08) */
+  border:        1px solid var(--color-border-default);
+  padding:       var(--card-padding);      /* 1.5rem */
+  position:      relative;
+  overflow:      hidden;
+  transition:    box-shadow var(--transition-medium),
+                 transform  var(--transition-medium),
+                 border-color var(--transition-base);
+}
+
+.card-custom .card-header-custom {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-bottom:   var(--space-4);
+  padding-bottom:  var(--space-4);
+  border-bottom:   1px solid var(--color-border-default);
+}
+
+.card-custom .card-title-custom {
+  font-size:   var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color:       var(--color-text-primary);
+  margin:      0;
+}
+
+.card-custom .card-subtitle-custom {
+  font-size: var(--font-size-sm);
+  color:     var(--color-text-secondary);
+  margin:    var(--space-1) 0 0 0;
+}
+
+.card-custom .card-body-custom {
+  padding: 0;
+}
+
+.card-custom .card-footer-custom {
+  margin-top:    var(--space-4);
+  padding-top:   var(--space-4);
+  border-top:    1px solid var(--color-border-default);
+  display:       flex;
+  align-items:   center;
+  justify-content: space-between;
+}
+
+/* Card size variants */
+.card-sm  { padding: var(--card-padding-sm); }
+.card-lg  { padding: var(--card-padding-lg); }
+
+/* ============================================================
+   CARD STAT — KPI / Dashboard Metric Card
+   ============================================================ */
+.card-stat {
+  background:    var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow:    var(--shadow-base);
+  border:        1px solid var(--color-border-default);
+  padding:       var(--space-6);
+  position:      relative;
+  overflow:      hidden;
+  transition:    box-shadow var(--transition-medium),
+                 transform  var(--transition-medium);
+  display:       flex;
+  flex-direction: column;
+  gap:           var(--space-3);
+}
+
+/* Decorative top bar */
+.card-stat::before {
+  content:       '';
+  position:      absolute;
+  top:           0;
+  left:          0;
+  right:         0;
+  height:        4px;
+  background:    var(--color-blue-primary);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+.card-stat.stat-green::before  { background: var(--color-primary-green); }
+.card-stat.stat-blue::before   { background: var(--color-blue-primary); }
+.card-stat.stat-orange::before { background: var(--color-warning); }
+.card-stat.stat-red::before    { background: var(--color-error); }
+
+/* Stat icon wrapper */
+.card-stat .stat-icon {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           3rem;
+  height:          3rem;
+  border-radius:   var(--radius-base);
+  font-size:       1.375rem;
+  flex-shrink:     0;
+}
+
+.card-stat .stat-icon.icon-green {
+  background: var(--color-primary-green-light);
+  color:      var(--color-primary-green);
+}
+
+.card-stat .stat-icon.icon-blue {
+  background: var(--color-blue-light);
+  color:      var(--color-blue-primary);
+}
+
+.card-stat .stat-icon.icon-orange {
+  background: var(--color-warning-light);
+  color:      var(--color-warning-dark);
+}
+
+.card-stat .stat-icon.icon-red {
+  background: var(--color-error-light);
+  color:      var(--color-error-dark);
+}
+
+/* Stat row — icon + values side by side */
+.card-stat .stat-row {
+  display:     flex;
+  align-items: center;
+  gap:         var(--space-4);
+}
+
+.card-stat .stat-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-stat .stat-label {
+  font-size:      var(--font-size-sm);
+  font-weight:    var(--font-weight-medium);
+  color:          var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom:  var(--space-1);
+  white-space:    nowrap;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+}
+
+.card-stat .stat-value {
+  font-size:      var(--font-size-2xl);
+  font-weight:    var(--font-weight-bold);
+  color:          var(--color-text-primary);
+  line-height:    1;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.card-stat .stat-change {
+  display:     inline-flex;
+  align-items: center;
+  gap:         var(--space-1);
+  font-size:   var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  margin-top:  var(--space-1);
+}
+
+.card-stat .stat-change.up {
+  color: var(--color-success);
+}
+
+.card-stat .stat-change.down {
+  color: var(--color-error);
+}
+
+.card-stat .stat-footer-text {
+  font-size: var(--font-size-xs);
+  color:     var(--color-text-muted);
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--color-border-default);
+  padding-top: var(--space-2);
+}
+
+/* ============================================================
+   CARD LOAN — Loan / Credit Card Style
+   ============================================================ */
+.card-loan {
+  background:    linear-gradient(135deg, var(--color-primary-green) 0%, var(--color-primary-green-dark) 100%);
+  border-radius: var(--radius-card);
+  padding:       var(--space-6);
+  color:         var(--color-white);
+  position:      relative;
+  overflow:      hidden;
+  box-shadow:    var(--shadow-green);
+  transition:    transform var(--transition-medium),
+                 box-shadow var(--transition-medium);
+}
+
+/* Decorative circles */
+.card-loan::before {
+  content:       '';
+  position:      absolute;
+  top:           -40px;
+  right:         -40px;
+  width:         160px;
+  height:        160px;
+  border-radius: var(--radius-circle);
+  background:    rgba(255, 255, 255, 0.08);
+}
+
+.card-loan::after {
+  content:       '';
+  position:      absolute;
+  bottom:        -60px;
+  left:          -30px;
+  width:         220px;
+  height:        220px;
+  border-radius: var(--radius-circle);
+  background:    rgba(255, 255, 255, 0.05);
+}
+
+.card-loan .loan-label {
+  font-size:      var(--font-size-xs);
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+  color:          rgba(255, 255, 255, 0.75);
+  margin-bottom:  var(--space-1);
+}
+
+.card-loan .loan-amount {
+  font-size:   var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color:       var(--color-white);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+}
+
+.card-loan .loan-meta {
+  display:  flex;
+  gap:      var(--space-6);
+  position: relative;
+  z-index:  1;
+}
+
+.card-loan .loan-meta-item .label {
+  font-size:   var(--font-size-xs);
+  color:       rgba(255, 255, 255, 0.65);
+  font-weight: var(--font-weight-medium);
+}
+
+.card-loan .loan-meta-item .value {
+  font-size:   var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color:       var(--color-white);
+}
+
+.card-loan .loan-progress-bar {
+  height:        6px;
+  background:    rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-pill);
+  overflow:      hidden;
+  margin-top:    var(--space-4);
+  position:      relative;
+  z-index:       1;
+}
+
+.card-loan .loan-progress-fill {
+  height:        100%;
+  background:    rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-pill);
+  transition:    width 0.8s ease;
+}
+
+/* Blue variant */
+.card-loan.loan-blue {
+  background: linear-gradient(135deg, var(--color-blue-primary) 0%, var(--color-blue-dark) 100%);
+  box-shadow: var(--shadow-blue);
+}
+
+/* ============================================================
+   CARD HOVER — Elevates on Hover
+   ============================================================ */
+.card-hover {
+  background:    var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow:    var(--shadow-sm);
+  border:        1px solid var(--color-border-default);
+  padding:       var(--card-padding);
+  cursor:        pointer;
+  transition:    box-shadow var(--transition-medium),
+                 transform  var(--transition-medium),
+                 border-color var(--transition-base);
+}
+
+.card-hover:hover {
+  box-shadow:  var(--shadow-card-hover);
+  transform:   translateY(-6px);
+  border-color: var(--color-blue-primary);
+}
+
+.card-hover:active {
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   CARD GLASS — Glassmorphism
+   ============================================================ */
+.card-glass {
+  background:    var(--glass-bg);
+  border:        1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  box-shadow:    var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding:       var(--card-padding);
+  position:      relative;
+  overflow:      hidden;
+  transition:    box-shadow var(--transition-medium),
+                 transform  var(--transition-medium);
+}
+
+.card-glass:hover {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.20);
+  transform:  translateY(-4px);
+}
+
+/* Dark glass (for light backgrounds) */
+.card-glass-dark {
+  background:      rgba(17, 24, 39, 0.70);
+  border:          1px solid rgba(255, 255, 255, 0.10);
+  border-radius:   var(--radius-card);
+  box-shadow:      var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding:         var(--card-padding);
+  color:           var(--color-white);
+}
+
+/* ============================================================
+   CARD GRADIENT — Colored gradient backgrounds
+   ============================================================ */
+.card-gradient {
+  border-radius: var(--radius-card);
+  padding:       var(--card-padding);
+  color:         var(--color-white);
+  position:      relative;
+  overflow:      hidden;
+  box-shadow:    var(--shadow-md);
+  transition:    transform var(--transition-medium),
+                 box-shadow var(--transition-medium);
+}
+
+.card-gradient:hover {
+  transform:  translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Gradient variants */
+.card-gradient-green {
+  background: linear-gradient(135deg, #0F8B6D 0%, #065f46 100%);
+}
+
+.card-gradient-blue {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+}
+
+.card-gradient-orange {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+}
+
+.card-gradient-red {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+}
+
+.card-gradient-purple {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+}
+
+.card-gradient-rainbow {
+  background: linear-gradient(135deg, #0F8B6D 0%, #2563EB 50%, #8B5CF6 100%);
+}
+
+/* Decorative background shape */
+.card-gradient::after {
+  content:       '';
+  position:      absolute;
+  bottom:        -30px;
+  right:         -30px;
+  width:         130px;
+  height:        130px;
+  background:    rgba(255, 255, 255, 0.10);
+  border-radius: var(--radius-circle);
+  pointer-events: none;
+}
+
+/* Gradient card text helpers */
+.card-gradient .gradient-label {
+  font-size:      var(--font-size-xs);
+  font-weight:    var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color:          rgba(255, 255, 255, 0.75);
+  margin-bottom:  var(--space-2);
+}
+
+.card-gradient .gradient-value {
+  font-size:   var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color:       var(--color-white);
+  line-height: 1.1;
+}
+
+/* ============================================================
+   COLOR ACCENT BORDER VARIANTS
+   ============================================================ */
+.card-accent-green  { border-left: 4px solid var(--color-primary-green); }
+.card-accent-blue   { border-left: 4px solid var(--color-blue-primary); }
+.card-accent-orange { border-left: 4px solid var(--color-warning); }
+.card-accent-red    { border-left: 4px solid var(--color-error); }
+
+/* ============================================================
+   CARD FEATURE — Icon + Title + Description
+   ============================================================ */
+.card-feature {
+  background:    var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow:    var(--shadow-base);
+  border:        1px solid var(--color-border-default);
+  padding:       var(--space-8);
+  text-align:    center;
+  transition:    box-shadow var(--transition-medium),
+                 transform  var(--transition-medium),
+                 border-color var(--transition-base);
+}
+
+.card-feature:hover {
+  box-shadow:   var(--shadow-card-hover);
+  transform:    translateY(-6px);
+  border-color: var(--color-primary-green);
+}
+
+.card-feature .feature-icon-wrap {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           4rem;
+  height:          4rem;
+  border-radius:   var(--radius-base);
+  background:      var(--color-primary-green-light);
+  color:           var(--color-primary-green);
+  font-size:       1.75rem;
+  margin:          0 auto var(--space-4);
+  transition:      background var(--transition-base),
+                   color var(--transition-base);
+}
+
+.card-feature:hover .feature-icon-wrap {
+  background: var(--color-primary-green);
+  color:      var(--color-white);
+}
+
+.card-feature .feature-title {
+  font-size:     var(--font-size-md);
+  font-weight:   var(--font-weight-semibold);
+  color:         var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.card-feature .feature-desc {
+  font-size:   var(--font-size-sm);
+  color:       var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ============================================================
+   CARD SKELETON LOADER (placeholder)
+   ============================================================ */
+.card-skeleton {
+  background:    var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow:    var(--shadow-base);
+  border:        1px solid var(--color-border-default);
+  padding:       var(--card-padding);
+  overflow:      hidden;
+}
+
+.card-skeleton .skeleton-line {
+  height:        14px;
+  background:    linear-gradient(90deg,
+                   var(--color-gray-100) 25%,
+                   var(--color-gray-200) 50%,
+                   var(--color-gray-100) 75%);
+  background-size: 400% 100%;
+  border-radius:   var(--radius-pill);
+  margin-bottom:   var(--space-3);
+  animation:       shimmer 1.5s infinite;
+}
+
+.card-skeleton .skeleton-line.short  { width: 60%; }
+.card-skeleton .skeleton-line.medium { width: 80%; }
+.card-skeleton .skeleton-line.full   { width: 100%; }
+
+.card-skeleton .skeleton-box {
+  height:     80px;
+  background: linear-gradient(90deg,
+                var(--color-gray-100) 25%,
+                var(--color-gray-200) 50%,
+                var(--color-gray-100) 75%);
+  background-size: 400% 100%;
+  border-radius:   var(--radius-base);
+  animation:       shimmer 1.5s infinite;
+}

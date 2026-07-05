@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EduCrédito EC – Plataforma de microcréditos estudiantiles para la Universidad Técnica de Babahoyo. Solicita, simula y gestiona tu crédito de forma rápida, segura y 100% digital." />
+  <title>EduCrédito EC – Microcréditos Estudiantiles | UTB</title>
+
+  <!-- Poppins Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <!-- AOS Animate on Scroll -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Project CSS -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/cards.css" />
+  <link rel="stylesheet" href="css/forms.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════ PAGE LOADER ═══════════════════════════════ -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-spinner"></div>
+</div>
+
+<!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════════ -->
+<nav class="navbar navbar-landing navbar-expand-lg fixed-top" id="mainNavbar">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <div class="navbar-logo-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="navbar-logo-text">
+        <span class="logo-edu">Edu</span><span class="logo-credito">Crédito</span>
+        <span class="logo-ec">EC</span>
+      </div>
+    </a>
+
+    <!-- Hamburger -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars text-white"></i>
+    </button>
+
+    <!-- Nav Links -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item">
+          <a class="nav-link active" href="#inicio" id="nav-inicio">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#como-funciona" id="nav-como">Cómo funciona</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#simulador" id="nav-simulador">Simulador</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#faq" id="nav-faq">Preguntas frecuentes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contacto" id="nav-contacto">Contacto</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+        <a href="login.html" class="btn btn-outline-nav" id="btn-nav-login">
+          <i class="fa-solid fa-right-to-bracket me-1"></i> Iniciar sesión
+        </a>
+        <a href="register.html" class="btn btn-nav-register" id="btn-nav-register">
+          <i class="fa-solid fa-user-plus me-1"></i> Registrarse
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ HERO SECTION ═══════════════════════════════ -->
+<section class="hero-section" id="inicio">
+  <!-- Decorative background shapes -->
+  <div class="hero-bg-shape hero-shape-1"></div>
+  <div class="hero-bg-shape hero-shape-2"></div>
+  <div class="hero-bg-shape hero-shape-3"></div>
+
+  <div class="container hero-container">
+    <div class="row align-items-center min-vh-100 pt-5">
+
+      <!-- Left: Text Content -->
+      <div class="col-lg-6 hero-content" data-aos="fade-right" data-aos-duration="900">
+        <div class="hero-badge mb-3">
+          <i class="fa-solid fa-shield-check me-1"></i>
+          100% Digital · Seguro · Transparente
+        </div>
+        <h1 class="hero-title">
+          Microcréditos estudiantiles <span class="hero-title-highlight">rápidos, seguros</span> y completamente digitales
+        </h1>
+        <p class="hero-subtitle">
+          Obtén apoyo económico para continuar tus estudios sin procesos complicados. Diseñado exclusivamente para estudiantes de la <strong>Universidad Técnica de Babahoyo</strong>.
+        </p>
+
+        <!-- Feature bullets -->
+        <div class="hero-features">
+          <div class="hero-feature-item">
+            <i class="fa-solid fa-circle-check text-success"></i>
+            <span>Solicita en minutos</span>
+          </div>
+          <div class="hero-feature-item">
+            <i class="fa-solid fa-circle-check text-success"></i>
+            <span>Simula tu crédito antes de solicitar</span>
+          </div>
+          <div class="hero-feature-item">
+            <i class="fa-solid fa-circle-check text-success"></i>
+            <span>Consulta tu historial completo</span>
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="hero-cta d-flex flex-wrap gap-3 mt-4">
+          <a href="register.html" class="btn btn-primary-custom btn-lg" id="btn-hero-register">
+            <i class="fa-solid fa-hand-holding-dollar me-2"></i>
+            Solicitar crédito
+          </a>
+          <a href="#simulador" class="btn btn-outline-hero btn-lg" id="btn-hero-sim">
+            <i class="fa-solid fa-calculator me-2"></i>
+            Simular crédito
+          </a>
+        </div>
+
+        <!-- Trust indicators -->
+        <div class="hero-trust mt-4">
+          <div class="hero-trust-item">
+            <span class="hero-trust-number">100%</span>
+            <span class="hero-trust-label">Digital</span>
+          </div>
+          <div class="hero-trust-divider"></div>
+          <div class="hero-trust-item">
+            <span class="hero-trust-number">24/7</span>
+            <span class="hero-trust-label">Disponible</span>
+          </div>
+          <div class="hero-trust-divider"></div>
+          <div class="hero-trust-item">
+            <span class="hero-trust-number">$25</span>
+            <span class="hero-trust-label">Máximo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Image -->
+      <div class="col-lg-6 hero-image-col text-center" data-aos="fade-left" data-aos-duration="900" data-aos-delay="200">
+        <div class="hero-image-wrapper">
+          <div class="hero-image-bg-circle"></div>
+          <img src="img/landing/hero_student.png" alt="Estudiante universitario usando EduCrédito EC en su laptop" class="hero-image animate-float" />
+          <!-- Floating cards -->
+          <div class="hero-float-card hero-float-card-1" data-aos="fade-up" data-aos-delay="600">
+            <div class="d-flex align-items-center gap-2">
+              <div class="float-card-icon bg-success-soft">
+                <i class="fa-solid fa-check text-success"></i>
+              </div>
+              <div>
+                <div class="float-card-title">Crédito aprobado</div>
+                <div class="float-card-sub">$20.00 · 15 días</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-float-card hero-float-card-2" data-aos="fade-up" data-aos-delay="800">
+            <div class="d-flex align-items-center gap-2">
+              <div class="float-card-icon bg-blue-soft">
+                <i class="fa-solid fa-bolt text-primary"></i>
+              </div>
+              <div>
+                <div class="float-card-title">Solicitud en</div>
+                <div class="float-card-sub">menos de 2 minutos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#F5F7FA"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CÓMO FUNCIONA ═══════════════════════════════ -->
+<section class="section-como-funciona py-5" id="como-funciona">
+  <div class="container py-4">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-badge">Proceso simple</span>
+      <h2 class="section-title">¿Cómo funciona?</h2>
+      <p class="section-subtitle">Obtén tu microcrédito en 5 sencillos pasos</p>
+    </div>
+
+    <div class="steps-container">
+      <div class="row g-4 align-items-start">
+
+        <div class="col-lg col-sm-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon-wrapper">
+              <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <h3 class="step-title">Regístrate</h3>
+            <p class="step-desc">Crea tu cuenta con tu correo institucional UTB y completa tu información académica.</p>
+          </div>
+        </div>
+
+        <div class="step-connector d-none d-lg-flex" data-aos="fade-right" data-aos-delay="150">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="col-lg col-sm-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon-wrapper">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <h3 class="step-title">Simula</h3>
+            <p class="step-desc">Usa el simulador para conocer exactamente cuánto pagarás antes de solicitar.</p>
+          </div>
+        </div>
+
+        <div class="step-connector d-none d-lg-flex" data-aos="fade-right" data-aos-delay="250">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="col-lg col-sm-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon-wrapper">
+              <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <h3 class="step-title">Solicita</h3>
+            <p class="step-desc">Completa el formulario de solicitud con el monto, plazo y datos del garante.</p>
+          </div>
+        </div>
+
+        <div class="step-connector d-none d-lg-flex" data-aos="fade-right" data-aos-delay="350">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="col-lg col-sm-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <div class="step-icon-wrapper">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="step-title">Aprobación</h3>
+            <p class="step-desc">El administrador revisará tu solicitud y recibirás una notificación con la decisión.</p>
+          </div>
+        </div>
+
+        <div class="step-connector d-none d-lg-flex" data-aos="fade-right" data-aos-delay="450">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+        <div class="col-lg col-sm-6" data-aos="fade-up" data-aos-delay="500">
+          <div class="step-card step-card-highlight">
+            <div class="step-number">05</div>
+            <div class="step-icon-wrapper">
+              <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+            <h3 class="step-title">Paga</h3>
+            <p class="step-desc">Realiza el pago en la fecha acordada y sube tu comprobante para finalizar.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ BENEFICIOS ═══════════════════════════════ -->
+<section class="section-beneficios py-5 bg-light-custom" id="beneficios">
+  <div class="container py-4">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-badge section-badge-blue">Por qué elegirnos</span>
+      <h2 class="section-title">Nuestros beneficios</h2>
+      <p class="section-subtitle">Todo lo que necesitas en una sola plataforma</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="benefit-card card-hover">
+          <div class="benefit-icon benefit-icon-green">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3 class="benefit-title">Proceso rápido</h3>
+          <p class="benefit-desc">Solicita tu crédito en menos de 2 minutos desde cualquier dispositivo.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="benefit-card card-hover">
+          <div class="benefit-icon benefit-icon-blue">
+            <i class="fa-solid fa-eye"></i>
+          </div>
+          <h3 class="benefit-title">Intereses transparentes</h3>
+          <p class="benefit-desc">Sin costos ocultos. Conoce exactamente cuánto pagarás antes de confirmar.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="benefit-card card-hover">
+          <div class="benefit-icon benefit-icon-orange">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3 class="benefit-title">Seguimiento completo</h3>
+          <p class="benefit-desc">Consulta el estado de tu crédito, calendario de pagos e historial en tiempo real.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="benefit-card card-hover">
+          <div class="benefit-icon benefit-icon-purple">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <h3 class="benefit-title">100% digital</h3>
+          <p class="benefit-desc">Accede desde tu computadora, tablet o celular. Sin filas, sin papeles.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SIMULADOR PÚBLICO ═══════════════════════════════ -->
+<section class="simulator-section py-5" id="simulador">
+  <div class="hero-bg-shape hero-shape-1" style="opacity:0.04"></div>
+  <div class="container py-4">
+    <div class="row align-items-center g-5">
+
+      <!-- Left: Simulator Form -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="text-center text-lg-start mb-4">
+          <span class="section-badge section-badge-white">Sin iniciar sesión</span>
+          <h2 class="section-title text-white">Simula tu crédito</h2>
+          <p class="section-subtitle text-white-70">Selecciona el monto y el plazo para ver cuánto pagarías</p>
+        </div>
+
+        <!-- Amount Selection -->
+        <div class="mb-4">
+          <label class="sim-label">Selecciona el monto</label>
+          <div class="amount-selector d-flex flex-wrap gap-2" id="amountSelector">
+            <button class="amount-btn" data-amount="5" id="amountBtn5">$5</button>
+            <button class="amount-btn" data-amount="10" id="amountBtn10">$10</button>
+            <button class="amount-btn active" data-amount="15" id="amountBtn15">$15</button>
+            <button class="amount-btn" data-amount="20" id="amountBtn20">$20</button>
+            <button class="amount-btn" data-amount="25" id="amountBtn25">$25</button>
+          </div>
+        </div>
+
+        <!-- Period Selection -->
+        <div class="mb-4">
+          <label class="sim-label">Selecciona el plazo</label>
+          <div class="period-selector d-flex gap-2 flex-wrap" id="periodSelector">
+            <button class="period-btn" data-days="7" id="periodBtn7">7 días · 5%</button>
+            <button class="period-btn active" data-days="15" id="periodBtn15">15 días · 7%</button>
+            <button class="period-btn" data-days="30" id="periodBtn30">30 días · 10%</button>
+          </div>
+        </div>
+
+        <button class="btn btn-sim-calc w-100" id="btnSimulate" onclick="calculatePublicSim()">
+          <i class="fa-solid fa-calculator me-2"></i> Calcular ahora
+        </button>
+      </div>
+
+      <!-- Right: Results Card -->
+      <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+        <div class="result-card" id="resultCard">
+          <div class="result-card-header">
+            <i class="fa-solid fa-receipt me-2"></i>
+            Resumen del crédito
+          </div>
+          <div class="result-card-body">
+            <div class="result-row">
+              <span class="result-label">Monto solicitado</span>
+              <span class="result-value result-value-main" id="res-monto">$15.00</span>
+            </div>
+            <div class="result-row">
+              <span class="result-label">Tasa de interés</span>
+              <span class="result-value" id="res-tasa">7%</span>
+            </div>
+            <div class="result-row">
+              <span class="result-label">Valor del interés</span>
+              <span class="result-value text-warning" id="res-interes">$1.05</span>
+            </div>
+            <div class="result-divider"></div>
+            <div class="result-row result-row-total">
+              <span class="result-label result-label-total">Total a pagar</span>
+              <span class="result-value result-total" id="res-total">$16.05</span>
+            </div>
+            <div class="result-row">
+              <span class="result-label">Fecha de solicitud</span>
+              <span class="result-value" id="res-fecha-inicio">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-label">Fecha límite de pago</span>
+              <span class="result-value text-danger" id="res-fecha-vence">—</span>
+            </div>
+            <div class="result-row">
+              <span class="result-label">Estado</span>
+              <span class="result-badge-sim">Simulación</span>
+            </div>
+          </div>
+          <a href="login.html" class="btn btn-result-solicitar w-100" id="btnSolicitar">
+            <i class="fa-solid fa-paper-plane me-2"></i>
+            Inicia sesión para solicitar este crédito
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ COMPARADOR ═══════════════════════════════ -->
+<section class="section-comparador py-5" id="comparador">
+  <div class="container py-4">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-badge">Comparador</span>
+      <h2 class="section-title">Elige el plazo ideal</h2>
+      <p class="section-subtitle">Compara las tres opciones de plazo para el monto seleccionado</p>
+    </div>
+    <div class="row g-4 justify-content-center" id="comparadorCards">
+      <!-- Filled dynamically by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FAQ ═══════════════════════════════ -->
+<section class="section-faq py-5 bg-light-custom" id="faq">
+  <div class="container py-4">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-badge section-badge-blue">Aclaraciones</span>
+      <h2 class="section-title">Preguntas frecuentes</h2>
+      <p class="section-subtitle">Todo lo que necesitas saber antes de comenzar</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="accordion faq-accordion" id="faqAccordion" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="accordion-item faq-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button faq-btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                <i class="fa-solid fa-circle-question me-2 text-primary"></i>
+                ¿Quién puede solicitar un microcrédito?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body faq-body">
+                Solo pueden solicitar créditos los estudiantes activos de la Universidad Técnica de Babahoyo que cuenten con un correo institucional válido (@fafi.utb.edu.ec, @fcjse.utb.edu.ec, @faciag.utb.edu.ec, @fcs.utb.edu.ec).
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item faq-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                <i class="fa-solid fa-circle-question me-2 text-primary"></i>
+                ¿Cuáles son los montos disponibles?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body faq-body">
+                Los montos disponibles son: $5, $10, $15, $20 y $25. Estos valores están definidos por la administración del sistema.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item faq-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                <i class="fa-solid fa-circle-question me-2 text-primary"></i>
+                ¿Cuáles son los plazos y tasas de interés?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body faq-body">
+                Existen tres plazos: <strong>7 días (5% de interés)</strong>, <strong>15 días (7%)</strong> y <strong>30 días (10%)</strong>. Todos los cálculos son transparentes y los verás antes de confirmar tu solicitud.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item faq-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                <i class="fa-solid fa-circle-question me-2 text-primary"></i>
+                ¿Puedo tener más de un préstamo activo?
+              </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body faq-body">
+                No. Cada estudiante puede mantener únicamente un préstamo activo a la vez. Para solicitar uno nuevo, deberás cancelar el préstamo anterior.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item faq-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                <i class="fa-solid fa-circle-question me-2 text-primary"></i>
+                ¿Cómo realizo el pago?
+              </button>
+            </h2>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body faq-body">
+                Una vez aprobado tu crédito, podrás ver los métodos de pago disponibles en tu panel. Realizas la transferencia o depósito y subes el comprobante en la plataforma. El administrador verificará y actualizará tu saldo.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item faq-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                <i class="fa-solid fa-circle-question me-2 text-primary"></i>
+                ¿Qué pasa si no pago a tiempo?
+              </button>
+            </h2>
+            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body faq-body">
+                Si no realizas el pago en la fecha establecida, el sistema cambiará automáticamente el estado a <strong>"En mora"</strong> y se aplicará un interés moratorio adicional. También recibirás una notificación de alerta y se bloqueará la opción de solicitar nuevos créditos hasta regularizar tu situación.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item faq-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                <i class="fa-solid fa-circle-question me-2 text-primary"></i>
+                ¿Es obligatorio tener un garante?
+              </button>
+            </h2>
+            <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body faq-body">
+                Sí. Para completar la solicitud de crédito deberás registrar los datos de un garante (nombre, cédula, parentesco, teléfono, dirección, ocupación y correo electrónico).
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CONTACTO ═══════════════════════════════ -->
+<section class="section-contacto py-5" id="contacto">
+  <div class="container py-4">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-badge">Soporte</span>
+      <h2 class="section-title">¿Tienes alguna pregunta?</h2>
+      <p class="section-subtitle">Estamos disponibles para ayudarte</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="contact-card text-center">
+          <div class="contact-icon-wrap">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <h4 class="contact-title">Correo electrónico</h4>
+          <p class="contact-info">educredito@utb.edu.ec</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="contact-card text-center">
+          <div class="contact-icon-wrap contact-icon-green">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <h4 class="contact-title">WhatsApp</h4>
+          <p class="contact-info">+593 99 123 4567</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="contact-card text-center">
+          <div class="contact-icon-wrap contact-icon-orange">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <h4 class="contact-title">Ubicación</h4>
+          <p class="contact-info">Universidad Técnica de Babahoyo, Ecuador</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer class="footer-landing" id="footer">
+  <div class="container py-5">
+    <div class="row g-4">
+
+      <!-- Brand -->
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="footer-logo-icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div class="footer-logo-text">
+              <span class="logo-edu">Edu</span><span class="logo-credito-footer">Crédito</span>
+              <span class="logo-ec-footer"> EC</span>
+            </div>
+          </div>
+          <p class="footer-slogan">"Impulsando tus estudios, apoyando tu futuro."</p>
+          <p class="footer-utb">Un proyecto de la <strong>Universidad Técnica de Babahoyo</strong> · Carrera de Pedagogía de las Ciencias Experimentales en Informática</p>
+          <!-- Social links -->
+          <div class="footer-socials mt-3">
+            <a href="#" class="footer-social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="footer-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="footer-social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" class="footer-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-lg-2 col-md-6 col-6">
+        <h5 class="footer-heading">Plataforma</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#simulador">Simulador</a></li>
+          <li><a href="#faq">Preguntas frecuentes</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Account -->
+      <div class="col-lg-2 col-md-6 col-6">
+        <h5 class="footer-heading">Mi cuenta</h5>
+        <ul class="footer-links">
+          <li><a href="login.html">Iniciar sesión</a></li>
+          <li><a href="register.html">Registrarse</a></li>
+          <li><a href="forgot-password.html">Recuperar contraseña</a></li>
+          <li><a href="student/dashboard.html">Panel del estudiante</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="col-lg-4 col-md-6">
+        <h5 class="footer-heading">Legal e información</h5>
+        <ul class="footer-links">
+          <li><a href="terms.html">Términos y condiciones</a></li>
+          <li><a href="privacy.html">Política de privacidad</a></li>
+        </ul>
+        <div class="footer-info-box mt-3">
+          <p class="mb-1"><i class="fa-solid fa-envelope me-2 text-primary"></i>educredito@utb.edu.ec</p>
+          <p class="mb-1"><i class="fa-solid fa-phone me-2 text-success"></i>+593 99 123 4567</p>
+          <p class="mb-0"><i class="fa-solid fa-location-dot me-2 text-warning"></i>Babahoyo, Los Ríos, Ecuador</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="footer-divider" />
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <p class="mb-0">&copy; 2026 EduCrédito EC. Todos los derechos reservados.</p>
+      <p class="mb-0">Desarrollado por <strong>Erick Andrés Herrera</strong> · UTB</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════ BACK TO TOP ═══════════════════════════════ -->
+<button class="back-to-top" id="backToTop" aria-label="Volver arriba" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<!-- ═══════════════════════════════ SCRIPTS ═══════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/validations.js"></script>
+<script src="js/simulation.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+/* ─── Landing Page Logic ─────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // AOS
+  AOS.init({ duration: 700, once: true, easing: 'ease-out-quart' });
+
+  // Hide loader
+  setTimeout(() => {
+    const loader = document.getElementById('pageLoader');
+    if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 300); }
+  }, 500);
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('mainNavbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    // Back to top
+    const btt = document.getElementById('backToTop');
+    if (btt) btt.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Init public simulator
+  initPublicSimulator();
+
+  // Render comparador
+  renderComparadorCards(15); // default amount
+
+  // If already logged in, redirect
+  const session = JSON.parse(localStorage.getItem('educredito_session') || '{}');
+  if (session.loggedIn) {
+    const loginBtn = document.querySelector('.btn-outline-nav');
+    if (loginBtn) loginBtn.textContent = 'Mi Panel';
+    loginBtn && (loginBtn.href = session.role === 'admin' ? 'admin/dashboard.html' : 'student/dashboard.html');
+  }
+});
+
+/* ─── Public Simulator ─────────────────────────────────────────── */
+let selectedAmount = 15;
+let selectedDays = 15;
+const rates = { 7: 5, 15: 7, 30: 10 };
+
+function initPublicSimulator() {
+  // Amount buttons
+  document.querySelectorAll('.amount-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedAmount = parseInt(btn.dataset.amount);
+      calculatePublicSim();
+      renderComparadorCards(selectedAmount);
+    });
+  });
+
+  // Period buttons
+  document.querySelectorAll('.period-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedDays = parseInt(btn.dataset.days);
+      calculatePublicSim();
+    });
+  });
+
+  // Initial calculation
+  calculatePublicSim();
+}
+
+function calculatePublicSim() {
+  const rate = rates[selectedDays] || 7;
+  const interes = parseFloat((selectedAmount * (rate / 100)).toFixed(2));
+  const total = parseFloat((selectedAmount + interes).toFixed(2));
+  const hoy = new Date();
+  const vence = new Date(hoy.getTime() + selectedDays * 24 * 60 * 60 * 1000);
+
+  const fmt = d => d.toLocaleDateString('es-EC', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+  // Animate result card
+  const card = document.getElementById('resultCard');
+  card.classList.remove('animate-fade-in');
+  void card.offsetWidth;
+  card.classList.add('animate-fade-in');
+
+  document.getElementById('res-monto').textContent = `$${selectedAmount.toFixed(2)}`;
+  document.getElementById('res-tasa').textContent = `${rate}%`;
+  document.getElementById('res-interes').textContent = `$${interes.toFixed(2)}`;
+  document.getElementById('res-total').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('res-fecha-inicio').textContent = fmt(hoy);
+  document.getElementById('res-fecha-vence').textContent = fmt(vence);
+}
+
+function renderComparadorCards(amount) {
+  const container = document.getElementById('comparadorCards');
+  if (!container) return;
+  const plazos = [
+    { dias: 7, tasa: 5, label: '7 días', color: 'green', badge: 'Menor costo' },
+    { dias: 15, tasa: 7, label: '15 días', color: 'yellow', badge: 'Recomendado' },
+    { dias: 30, tasa: 10, label: '30 días', color: 'red', badge: 'Mayor plazo' },
+  ];
+  container.innerHTML = plazos.map((p, i) => {
+    const interes = (amount * (p.tasa / 100)).toFixed(2);
+    const total = (parseFloat(amount) + parseFloat(interes)).toFixed(2);
+    const hoy = new Date();
+    const vence = new Date(hoy.getTime() + p.dias * 86400000);
+    const fmt = d => d.toLocaleDateString('es-EC', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const colorMap = { green: '#10B981', yellow: '#F59E0B', red: '#EF4444' };
+    return `
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="${(i+1)*100}">
+        <div class="comparador-card" style="--comp-color:${colorMap[p.color]}">
+          <div class="comp-badge" style="background:${colorMap[p.color]}">${p.badge}</div>
+          <div class="comp-plazo">${p.label}</div>
+          <div class="comp-tasa">${p.tasa}% interés</div>
+          <div class="comp-desglose">
+            <div class="comp-row"><span>Capital</span><span>$${parseFloat(amount).toFixed(2)}</span></div>
+            <div class="comp-row"><span>Interés</span><span class="text-warning">$${interes}</span></div>
+            <div class="comp-row comp-total"><span>Total</span><span>$${total}</span></div>
+            <div class="comp-row"><span>Vence</span><span>${fmt(vence)}</span></div>
+          </div>
+          <a href="login.html" class="btn btn-comp w-100">Solicitar</a>
+        </div>
+      </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════════════════════════════
+   EduCrédito EC – tables.css
+   Estilos de tablas modernas y badges de estado
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Tabla Base ───────────────────────────────────────────────────── */
+.table-custom {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.table-custom thead th {
+  background: var(--color-gray-50, #F9FAFB);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--color-border-default, #E5E7EB);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.table-custom thead th:first-child { border-radius: 12px 0 0 0; }
+.table-custom thead th:last-child  { border-radius: 0 12px 0 0; }
+
+.table-custom tbody tr {
+  transition: background var(--transition-base);
+  cursor: default;
+}
+.table-custom tbody tr:hover {
+  background: var(--color-gray-50, #F9FAFB);
+}
+.table-custom tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-default, #E5E7EB);
+  vertical-align: middle;
+  line-height: 1.4;
+}
+.table-custom tbody tr:last-child td { border-bottom: none; }
+
+/* ── Wrapper con overflow ─────────────────────────────────────────── */
+.table-wrapper {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-base);
+  overflow: hidden;
+}
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Tabla con rayas ─────────────────────────────────────────────── */
+.table-striped-custom tbody tr:nth-child(even) {
+  background: rgba(245,247,250,.6);
+}
+
+/* ── Barra de herramientas de tabla ──────────────────────────────── */
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border-default, #E5E7EB);
+}
+.table-toolbar-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+.table-toolbar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ── Buscador de tabla ───────────────────────────────────────────── */
+.table-search {
+  position: relative;
+  min-width: 220px;
+}
+.table-search input {
+  width: 100%;
+  padding: 9px 12px 9px 36px;
+  border: 1.5px solid var(--color-border-default, #E5E7EB);
+  border-radius: var(--radius-btn, 12px);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  transition: border-color .2s, box-shadow .2s;
+  outline: none;
+}
+.table-search input:focus {
+  border-color: var(--color-blue-primary, #2563EB);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+.table-search i {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-400, #9CA3AF);
+  font-size: 13px;
+}
+
+/* ── Paginación ──────────────────────────────────────────────────── */
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid var(--color-border-default, #E5E7EB);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pagination-info {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.pagination-controls { display: flex; gap: 4px; }
+.page-btn {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--color-border-default, #E5E7EB);
+  background: var(--color-bg-surface);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--font-family-base);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+}
+.page-btn:hover { border-color: var(--color-blue-primary); color: var(--color-blue-primary); }
+.page-btn.active { background: var(--color-blue-primary); border-color: var(--color-blue-primary); color: #fff; }
+.page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── Filtro por estado ───────────────────────────────────────────── */
+.filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-tab {
+  padding: 6px 14px;
+  border: 1.5px solid var(--color-border-default, #E5E7EB);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  background: var(--color-bg-surface);
+  transition: all .2s;
+}
+.filter-tab:hover { border-color: var(--color-blue-primary); color: var(--color-blue-primary); }
+.filter-tab.active { background: var(--color-blue-primary); border-color: var(--color-blue-primary); color: #fff; }
+
+/* ══════════════════════════════════════════════════════════════════
+   BADGES DE ESTADO
+══════════════════════════════════════════════════════════════════ */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.badge-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Estados individuales */
+.badge-pendiente  { background: var(--color-status-pendiente-bg,#FEF3C7); color: var(--color-status-pendiente-text,#92400e); }
+.badge-pendiente::before  { background: var(--color-status-pendiente-dot,#F59E0B); }
+
+.badge-aprobado   { background: var(--color-status-aprobado-bg,#D1FAE5); color: var(--color-status-aprobado-text,#065f46); }
+.badge-aprobado::before   { background: var(--color-status-aprobado-dot,#10B981); }
+
+.badge-rechazado  { background: var(--color-status-rechazado-bg,#FEE2E2); color: var(--color-status-rechazado-text,#991b1b); }
+.badge-rechazado::before  { background: var(--color-status-rechazado-dot,#EF4444); }
+
+.badge-activo     { background: var(--color-status-activo-bg,#DBEAFE); color: var(--color-status-activo-text,#1e40af); }
+.badge-activo::before     { background: var(--color-status-activo-dot,#2563EB); }
+
+.badge-pagado     { background: var(--color-status-pagado-bg,#D1FAE5); color: var(--color-status-pagado-text,#065f46); }
+.badge-pagado::before     { background: var(--color-status-pagado-dot,#059669); }
+
+.badge-vencido    { background: var(--color-status-vencido-bg,#FEE2E2); color: var(--color-status-vencido-text,#991b1b); }
+.badge-vencido::before    { background: var(--color-status-vencido-dot,#DC2626); }
+
+.badge-mora       { background: var(--color-status-mora-bg,#FFEDD5); color: var(--color-status-mora-text,#9a3412); }
+.badge-mora::before       { background: var(--color-status-mora-dot,#F97316); }
+
+.badge-cancelado  { background: var(--color-status-cancelado-bg,#F3F4F6); color: var(--color-status-cancelado-text,#374151); }
+.badge-cancelado::before  { background: var(--color-status-cancelado-dot,#9CA3AF); }
+
+.badge-revision   { background: #EDE9FE; color: #5b21b6; }
+.badge-revision::before   { background: #7C3AED; }
+
+.badge-verificado { background: #D1FAE5; color: #065f46; }
+.badge-verificado::before { background: #10B981; }
+
+/* ── Estado vacío ────────────────────────────────────────────────── */
+.table-empty {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--color-text-secondary);
+}
+.table-empty i {
+  font-size: 48px;
+  color: var(--color-gray-300, #D1D5DB);
+  margin-bottom: 16px;
+  display: block;
+}
+.table-empty h4 { font-size: 16px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 6px; }
+.table-empty p  { font-size: 13px; margin: 0; }
+
+/* ── Avatar en tabla ─────────────────────────────────────────────── */
+.table-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.table-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.table-user-name  { font-weight: var(--font-weight-medium); color: var(--color-text-primary); font-size: 13px; }
+.table-user-email { font-size: 11px; color: var(--color-text-muted); }
+
+/* ── Acciones de tabla ───────────────────────────────────────────── */
+.table-actions { display: flex; gap: 6px; align-items: center; }
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.action-btn-view    { background: #DBEAFE; color: #1D4ED8; }
+.action-btn-view:hover    { background: #1D4ED8; color: #fff; }
+.action-btn-approve { background: #D1FAE5; color: #065f46; }
+.action-btn-approve:hover { background: #10B981; color: #fff; }
+.action-btn-reject  { background: #FEE2E2; color: #991b1b; }
+.action-btn-reject:hover  { background: #EF4444; color: #fff; }
+.action-btn-edit    { background: #FEF3C7; color: #92400e; }
+.action-btn-edit:hover    { background: #F59E0B; color: #fff; }
+
+/* ── DataTables overrides ────────────────────────────────────────── */
+.dataTables_wrapper .dataTables_filter input { border: 1.5px solid #E5E7EB; border-radius: 10px; padding: 7px 12px; font-size: 13px; outline: none; }
+.dataTables_wrapper .dataTables_filter input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+.dataTables_wrapper .dataTables_length select { border: 1.5px solid #E5E7EB; border-radius: 8px; padding: 6px 10px; font-size: 13px; outline: none; }
+.dataTables_wrapper .dataTables_info { font-size: 12px; color: #6B7280; }
+.dataTables_wrapper .dataTables_paginate .paginate_button { border-radius: 8px !important; font-size: 13px !important; }
+.dataTables_wrapper .dataTables_paginate .paginate_button.current { background: #2563EB !important; border-color: #2563EB !important; color: #fff !important; }

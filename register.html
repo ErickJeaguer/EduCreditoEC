@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Crear cuenta en EduCrédito EC – Registro para estudiantes UTB." />
+  <title>Crear Cuenta – EduCrédito EC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/forms.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/utilities.css" />
+  <style>
+    body { background: linear-gradient(135deg, #0F8B6D 0%, #065f46 40%, #1e3a5f 100%); min-height: 100vh; font-family: 'Poppins', sans-serif; padding: 30px 15px; }
+    .reg-shape { position: fixed; border-radius: 50%; background: rgba(255,255,255,.05); pointer-events: none; }
+    .reg-shape.s1 { width: 500px; height: 500px; top: -200px; right: -150px; }
+    .reg-shape.s2 { width: 300px; height: 300px; bottom: -100px; left: -100px; }
+    .reg-wrapper { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+    .reg-card { background: #fff; border-radius: 24px; padding: 48px 44px; box-shadow: 0 30px 60px rgba(0,0,0,.25); }
+    .reg-header { text-align: center; margin-bottom: 36px; }
+    .reg-logo-icon { width: 56px; height: 56px; background: linear-gradient(135deg,#0F8B6D,#2563EB); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 12px; box-shadow: 0 8px 20px rgba(15,139,109,.4); }
+    .reg-logo-icon i { font-size: 24px; color: #fff; }
+    .reg-brand { font-size: 20px; font-weight: 700; color: #1F2937; }
+    .reg-brand .g { color: #0F8B6D; } .reg-brand .b { color: #2563EB; }
+    .reg-subtitle { font-size: 12px; color: #6B7280; margin-top: 4px; }
+    /* Steps indicator */
+    .reg-steps { display: flex; align-items: center; margin-bottom: 36px; }
+    .reg-step-dot { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #E5E7EB; background: #fff; color: #9CA3AF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; transition: all .3s; }
+    .reg-step-dot.active { border-color: #2563EB; background: #2563EB; color: #fff; box-shadow: 0 4px 14px rgba(37,99,235,.4); }
+    .reg-step-dot.done   { border-color: #10B981; background: #10B981; color: #fff; }
+    .reg-step-line { flex: 1; height: 2px; background: #E5E7EB; transition: background .3s; }
+    .reg-step-line.done { background: #10B981; }
+    .step-labels { display: flex; justify-content: space-between; margin-bottom: 32px; }
+    .step-lbl { font-size: 11px; color: #9CA3AF; font-weight: 500; text-align: center; flex: 1; }
+    .step-lbl.active { color: #2563EB; font-weight: 700; }
+    .step-lbl.done   { color: #10B981; }
+    /* Form fields */
+    .form-step { display: none; }
+    .form-step.active { display: block; animation: fadeInUp .35s ease; }
+    .step-title { font-size: 17px; font-weight: 700; color: #1F2937; margin-bottom: 6px; }
+    .step-desc  { font-size: 12px; color: #6B7280; margin-bottom: 24px; }
+    .field-group { margin-bottom: 18px; }
+    .field-label { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+    .field-label .req { color: #EF4444; }
+    .input-wrap { position: relative; }
+    .input-wrap .f-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #9CA3AF; font-size: 14px; pointer-events: none; }
+    .input-wrap input, .input-wrap select, .input-wrap textarea {
+      width: 100%; padding: 11px 14px 11px 40px;
+      border: 2px solid #E5E7EB; border-radius: 10px;
+      font-size: 13.5px; font-family: 'Poppins', sans-serif;
+      color: #1F2937; background: #fff; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .input-wrap select { appearance: none; }
+    .input-wrap textarea { padding-top: 12px; padding-bottom: 12px; resize: vertical; }
+    .input-wrap input:focus, .input-wrap select:focus, .input-wrap textarea:focus { border-color: #2563EB; box-shadow: 0 0 0 4px rgba(37,99,235,.1); }
+    .input-wrap input.err, .input-wrap select.err { border-color: #EF4444; }
+    .input-wrap input.ok,  .input-wrap select.ok  { border-color: #10B981; }
+    .field-error { font-size: 11px; color: #EF4444; margin-top: 4px; display: none; }
+    .field-error.show { display: block; }
+    .eye-btn { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9CA3AF; cursor: pointer; font-size: 14px; }
+    /* Password strength */
+    .strength-wrap { margin-top: 8px; }
+    .strength-bar  { height: 4px; background: #E5E7EB; border-radius: 2px; overflow: hidden; }
+    .strength-fill { height: 100%; border-radius: 2px; transition: width .4s, background .4s; width: 0; }
+    .strength-text { font-size: 11px; margin-top: 4px; font-weight: 500; color: #9CA3AF; }
+    /* Password checks */
+    .pass-checks { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .pass-check  { font-size: 11px; color: #9CA3AF; display: flex; align-items: center; gap: 4px; }
+    .pass-check.ok { color: #10B981; }
+    .pass-check i { font-size: 10px; }
+    /* Terms */
+    .terms-box { border: 1.5px solid #E5E7EB; border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+    .terms-scroll { max-height: 220px; overflow-y: auto; font-size: 12px; color: #6B7280; line-height: 1.7; scrollbar-width: thin; }
+    .terms-check  { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; }
+    .terms-check input[type=checkbox] { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; accent-color: #0F8B6D; }
+    .terms-check label { font-size: 12px; color: #374151; line-height: 1.5; cursor: pointer; }
+    .terms-check label a { color: #0F8B6D; font-weight: 600; }
+    /* Buttons */
+    .step-nav { display: flex; gap: 12px; margin-top: 28px; }
+    .btn-next { flex: 1; padding: 13px; background: linear-gradient(135deg, #2563EB, #1D4ED8); color: #fff; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; font-family: 'Poppins', sans-serif; }
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(37,99,235,.4); }
+    .btn-back { padding: 13px 24px; background: #F3F4F6; color: #374151; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; font-family: 'Poppins', sans-serif; }
+    .btn-back:hover { background: #E5E7EB; }
+    .login-link { text-align: center; font-size: 12px; color: #6B7280; margin-top: 20px; }
+    .login-link a { color: #0F8B6D; font-weight: 600; text-decoration: none; }
+    .back-link-top { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.8); text-decoration: none; font-size: 12px; margin-bottom: 18px; transition: color .2s; }
+    .back-link-top:hover { color: #fff; }
+    @media (max-width: 576px) { .reg-card { padding: 28px 18px; } .step-lbl { font-size: 10px; } }
+  </style>
+</head>
+<body>
+<div class="reg-shape s1"></div>
+<div class="reg-shape s2"></div>
+
+<div class="reg-wrapper">
+  <a href="index.html" class="back-link-top"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</a>
+
+  <div class="reg-card">
+    <!-- Header -->
+    <div class="reg-header">
+      <div class="reg-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div class="reg-brand"><span class="g">Edu</span><span class="b">Crédito</span> EC</div>
+      <p class="reg-subtitle">Crea tu cuenta · Solo estudiantes UTB</p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="reg-steps">
+      <div class="reg-step-dot active" id="dot1">1</div>
+      <div class="reg-step-line" id="line1"></div>
+      <div class="reg-step-dot" id="dot2">2</div>
+      <div class="reg-step-line" id="line2"></div>
+      <div class="reg-step-dot" id="dot3"><i class="fa-solid fa-check" style="font-size:11px;"></i></div>
+    </div>
+    <div class="step-labels">
+      <span class="step-lbl active" id="lbl1">Personal</span>
+      <span class="step-lbl" id="lbl2">Acceso</span>
+      <span class="step-lbl" id="lbl3">Términos</span>
+    </div>
+
+    <form id="registerForm" novalidate>
+
+      <!-- ─── PASO 1: Datos Personales ─── -->
+      <div class="form-step active" id="step1">
+        <h2 class="step-title"><i class="fa-solid fa-user me-2 text-primary"></i>Información personal</h2>
+        <p class="step-desc">Ingresa tus datos personales exactamente como aparecen en tu cédula.</p>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="field-group">
+              <div class="field-label">Nombres <span class="req">*</span></div>
+              <div class="input-wrap">
+                <i class="fa-solid fa-user f-icon"></i>
+                <input type="text" id="regNombre" placeholder="Ej. Erick Andrés" autocomplete="given-name" />
+              </div>
+              <div class="field-error" id="errNombre"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="field-group">
+              <div class="field-label">Apellidos <span class="req">*</span></div>
+              <div class="input-wrap">
+                <i class="fa-solid fa-user f-icon"></i>
+                <input type="text" id="regApellido" placeholder="Ej. Herrera García" autocomplete="family-name" />
+              </div>
+              <div class="field-error" id="errApellido"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="field-group">
+              <div class="field-label">Número de cédula <span class="req">*</span></div>
+              <div class="input-wrap">
+                <i class="fa-solid fa-id-card f-icon"></i>
+                <input type="text" id="regCedula" placeholder="0912345678" maxlength="10" inputmode="numeric" />
+              </div>
+              <div class="field-error" id="errCedula"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="field-group">
+              <div class="field-label">Teléfono celular <span class="req">*</span></div>
+              <div class="input-wrap">
+                <i class="fa-solid fa-phone f-icon"></i>
+                <input type="tel" id="regTelefono" placeholder="0991234567" maxlength="10" inputmode="numeric" />
+              </div>
+              <div class="field-error" id="errTelefono"></div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="field-group">
+              <div class="field-label">Correo institucional UTB <span class="req">*</span></div>
+              <div class="input-wrap">
+                <i class="fa-solid fa-envelope f-icon"></i>
+                <input type="email" id="regEmail" placeholder="usuario@fafi.utb.edu.ec" autocomplete="email" />
+              </div>
+              <div class="field-error" id="errEmail"></div>
+              <div style="font-size:11px;color:#6B7280;margin-top:4px;">
+                <i class="fa-solid fa-circle-info me-1 text-primary"></i>
+                Dominios aceptados: @fafi · @fcjse · @faciag · @fcs .utb.edu.ec
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PASO 2: Contraseña ─── -->
+      <div class="form-step" id="step2">
+        <h2 class="step-title"><i class="fa-solid fa-lock me-2 text-primary"></i>Crea tu contraseña</h2>
+        <p class="step-desc">Elige una contraseña segura. Debe cumplir todos los requisitos indicados.</p>
+
+        <div class="field-group">
+          <div class="field-label">Contraseña <span class="req">*</span></div>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock f-icon"></i>
+            <input type="password" id="regPassword" placeholder="••••••••" autocomplete="new-password" />
+            <button type="button" class="eye-btn" id="btnTogglePass"><i class="fa-solid fa-eye" id="eyePass"></i></button>
+          </div>
+          <div class="strength-wrap">
+            <div class="strength-bar"><div class="strength-fill" id="strFill"></div></div>
+            <div class="strength-text" id="strText">Ingresa una contraseña</div>
+          </div>
+          <div class="pass-checks">
+            <span class="pass-check" id="chk8"><i class="fa-solid fa-circle-xmark"></i> 8+ caracteres</span>
+            <span class="pass-check" id="chkUpper"><i class="fa-solid fa-circle-xmark"></i> Mayúscula</span>
+            <span class="pass-check" id="chkLower"><i class="fa-solid fa-circle-xmark"></i> Minúscula</span>
+            <span class="pass-check" id="chkNum"><i class="fa-solid fa-circle-xmark"></i> Número</span>
+            <span class="pass-check" id="chkSpecial"><i class="fa-solid fa-circle-xmark"></i> Carácter especial</span>
+          </div>
+          <div class="field-error" id="errPassword"></div>
+        </div>
+
+        <div class="field-group">
+          <div class="field-label">Confirmar contraseña <span class="req">*</span></div>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock f-icon"></i>
+            <input type="password" id="regConfirm" placeholder="••••••••" autocomplete="new-password" />
+            <button type="button" class="eye-btn" id="btnToggleConf"><i class="fa-solid fa-eye" id="eyeConf"></i></button>
+          </div>
+          <div class="field-error" id="errConfirm"></div>
+        </div>
+      </div>
+
+      <!-- ─── PASO 3: Términos ─── -->
+      <div class="form-step" id="step3">
+        <h2 class="step-title"><i class="fa-solid fa-file-contract me-2 text-primary"></i>Términos y condiciones</h2>
+        <p class="step-desc">Lee el documento completo. El botón de aceptar se habilitará al llegar al final.</p>
+
+        <div class="terms-box">
+          <div class="terms-scroll" id="termsScroll">
+            <h6 style="color:#1F2937;font-weight:700;margin-bottom:12px;">TÉRMINOS Y CONDICIONES – EduCrédito EC</h6>
+            <p><strong>1. Aceptación de los Términos.</strong> Al registrarse en EduCrédito EC, el usuario acepta íntegramente los presentes términos y condiciones. Si no está de acuerdo, no deberá continuar con el registro.</p>
+            <p><strong>2. Elegibilidad.</strong> Solo pueden registrarse estudiantes activos de la Universidad Técnica de Babahoyo con correo institucional válido. El sistema verificará el dominio del correo al momento del registro.</p>
+            <p><strong>3. Uso del sistema.</strong> EduCrédito EC es una plataforma diseñada exclusivamente para la gestión de microcréditos estudiantiles. Queda prohibido el uso indebido, la suplantación de identidad y cualquier actividad fraudulenta.</p>
+            <p><strong>4. Montos y plazos.</strong> Los montos disponibles son: $5, $10, $15, $20 y $25. Los plazos son de 7, 15 o 30 días. Las tasas de interés son del 5%, 7% y 10% respectivamente.</p>
+            <p><strong>5. Garante.</strong> Todo solicitante deberá registrar los datos de un garante válido. La información del garante será verificada por el administrador antes de la aprobación.</p>
+            <p><strong>6. Comprobantes.</strong> Todo pago deberá estar respaldado por un comprobante válido subido al sistema. No se aceptarán comprobantes duplicados o alterados.</p>
+            <p><strong>7. Mora.</strong> En caso de no cancelar el préstamo en la fecha establecida, se aplicará un interés moratorio sobre el saldo pendiente. El sistema bloqueará la opción de solicitar nuevos créditos hasta que la deuda sea regularizada.</p>
+            <p><strong>8. Privacidad.</strong> La información personal del estudiante será tratada de forma confidencial conforme a la Política de Privacidad de EduCrédito EC y la normativa ecuatoriana aplicable.</p>
+            <p><strong>9. Historial.</strong> Todas las operaciones realizadas en la plataforma quedarán registradas permanentemente en el historial del estudiante y no podrán ser eliminadas.</p>
+            <p><strong>10. Modificaciones.</strong> EduCrédito EC se reserva el derecho de modificar estos términos en cualquier momento. Las modificaciones serán notificadas mediante la plataforma.</p>
+            <p><strong>11. Legislación aplicable.</strong> Estos términos se rigen por la legislación vigente de la República del Ecuador.</p>
+            <p style="color:#9CA3AF;font-size:11px;margin-top:16px;">Versión 1.0 · Junio 2026 · Universidad Técnica de Babahoyo</p>
+          </div>
+          <div class="terms-check">
+            <input type="checkbox" id="acceptTerms" disabled />
+            <label for="acceptTerms">He leído y acepto los <a href="terms.html" target="_blank">Términos y Condiciones</a> y la <a href="privacy.html" target="_blank">Política de Privacidad</a> de EduCrédito EC.</label>
+          </div>
+          <div id="termsHint" style="font-size:11px;color:#F59E0B;margin-top:6px;display:block;">
+            <i class="fa-solid fa-arrow-down me-1"></i>Desplázate hasta el final del documento para habilitar la aceptación.
+          </div>
+        </div>
+      </div>
+
+    </form><!-- /form -->
+
+    <!-- Navigation buttons -->
+    <div class="step-nav">
+      <button type="button" class="btn-back" id="btnBack" style="display:none;">
+        <i class="fa-solid fa-arrow-left me-2"></i>Anterior
+      </button>
+      <button type="button" class="btn-next" id="btnNext">
+        Continuar <i class="fa-solid fa-arrow-right ms-2"></i>
+      </button>
+    </div>
+
+    <div class="login-link">
+      ¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/utils.js"></script>
+<script src="js/validations.js"></script>
+<script src="js/api.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>
