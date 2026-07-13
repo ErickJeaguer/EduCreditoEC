@@ -26,9 +26,13 @@
 }
 .navbar-logo-icon i { color: #fff; font-size: 18px; }
 .navbar-logo-text { line-height: 1; }
-.logo-edu    { font-size: 17px; font-weight: 700; color: #0F8B6D; }
-.logo-credito{ font-size: 17px; font-weight: 700; color: #1F2937; }
-.logo-ec     { font-size: 17px; font-weight: 800; color: #2563EB; }
+.navbar-landing .logo-edu    { font-size: 17px; font-weight: 700; color: #fff; }
+.navbar-landing .logo-credito{ font-size: 17px; font-weight: 700; color: #fff; }
+.navbar-landing .logo-ec     { font-size: 17px; font-weight: 800; color: #67e8f9; }
+
+.navbar-landing.scrolled .logo-edu    { color: #0F8B6D; }
+.navbar-landing.scrolled .logo-credito{ color: #1F2937; }
+.navbar-landing.scrolled .logo-ec     { color: #2563EB; }
 .navbar-landing .nav-link {
   color: rgba(255,255,255,.9) !important;
   font-size: 14px; font-weight: 500;
