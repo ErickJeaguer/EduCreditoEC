@@ -185,9 +185,34 @@
           <h3 style="font-size:16px;font-weight:700;color:var(--color-text-primary);margin-bottom:4px;"><i class="fa-solid fa-calendar me-2 text-primary"></i>Selecciona el plazo</h3>
           <p class="small mb-4" style="color:var(--color-text-secondary) !important;">Elige el tiempo que necesitas para pagar el crédito.</p>
           <div class="d-flex gap-3 flex-wrap mb-4">
-            <button class="period-btn" data-days="7">7 días · 5% interés</button>
-            <button class="period-btn active" data-days="15">15 días · 7% interés</button>
-            <button class="period-btn" data-days="30">30 días · 10% interés</button>
+            <button class="period-btn active" data-days="15">15 días · 5% interés</button>
+            <button class="period-btn" data-days="30">30 días · 7% interés</button>
+            <button class="period-btn" data-days="45">45 días · 9% interés</button>
+            <button class="period-btn" data-days="60">60 días · 12% interés</button>
+          </div>
+          <div class="mb-4">
+            <label class="label-custom">Cuenta bancaria de depósito <span style="color:#EF4444;">*</span></label>
+            <p class="small mb-2" style="color:var(--color-text-secondary);">¿A qué cuenta debemos transferir el préstamo?</p>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <select class="input-custom" id="bancoNombre">
+                  <option value="">— Banco —</option>
+                  <option value="Banco Pichincha">Banco Pichincha</option>
+                  <option value="Banco del Pacífico">Banco del Pacífico</option>
+                  <option value="Banco Guayaquil">Banco Guayaquil</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select class="input-custom" id="bancoTipo">
+                  <option value="">— Tipo —</option>
+                  <option value="Ahorros">Ahorros</option>
+                  <option value="Corriente">Corriente</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <input type="text" class="input-custom" id="bancoCuenta" placeholder="Número de cuenta" maxlength="20">
+              </div>
+            </div>
           </div>
           <div class="mb-3">
             <label class="label-custom">Motivo del préstamo <span style="color:#EF4444;">*</span></label>
@@ -198,15 +223,11 @@
         <!-- PASO 4: Garante -->
         <div class="form-step table-wrapper p-4" id="step4">
           <h3 style="font-size:16px;font-weight:700;color:var(--color-text-primary);margin-bottom:4px;"><i class="fa-solid fa-person-circle-check me-2 text-warning"></i>Datos del garante</h3>
-          <p class="small mb-4" style="color:var(--color-text-secondary) !important;">Ingresa la información de la persona que te avala. El garante debe ser mayor de 18 años.</p>
+          <p class="small mb-4" style="color:var(--color-text-secondary) !important;">Ingresa el correo del garante registrado en la plataforma y el parentesco. Se verificará automáticamente.</p>
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="label-custom">Nombre completo *</label>
-              <input class="input-custom" type="text" id="garanteNombre" placeholder="Nombre y apellidos" />
-            </div>
-            <div class="col-md-6">
-              <label class="label-custom">Cédula de identidad *</label>
-              <input class="input-custom" type="text" id="garanteCedula" placeholder="0912345678" maxlength="10" />
+              <label class="label-custom">Correo electrónico registrado *</label>
+              <input class="input-custom" type="email" id="garanteEmail" placeholder="garante@correo.com" />
             </div>
             <div class="col-md-6">
               <label class="label-custom">Relación / Parentesco *</label>
@@ -217,28 +238,25 @@
                 <option>Abuelo/a</option><option>Amigo/a de confianza</option>
               </select>
             </div>
-            <div class="col-md-6">
-              <label class="label-custom">Teléfono *</label>
-              <input class="input-custom" type="tel" id="garanteTelefono" placeholder="0991234567" maxlength="10" />
-            </div>
-            <div class="col-12">
-              <label class="label-custom">Dirección *</label>
-              <input class="input-custom" type="text" id="garanteDireccion" placeholder="Calle, número, barrio, ciudad" />
-            </div>
-            <div class="col-md-6">
-              <label class="label-custom">Ocupación *</label>
-              <input class="input-custom" type="text" id="garanteOcupacion" placeholder="Ej. Docente, Agricultor, Comerciante" />
-            </div>
-            <div class="col-md-6">
-              <label class="label-custom">Correo electrónico (opcional)</label>
-              <input class="input-custom" type="email" id="garanteEmail" placeholder="garante@correo.com" />
-            </div>
           </div>
         </div>
 
         <!-- PASO 5: Resumen -->
         <div class="form-step" id="step5">
           <div id="resumenFinal"></div>
+
+          <div class="table-wrapper p-3 mt-4">
+            <h6 style="font-weight:700; font-size:14px; margin-bottom:12px;">Tabla de Amortización (Pagos Semanales - Jueves)</h6>
+            <div class="table-scroll">
+              <table class="table-custom" style="font-size:13px;">
+                <thead>
+                  <tr><th># Cuota</th><th>Fecha de pago</th><th>Monto</th></tr>
+                </thead>
+                <tbody id="tablaAmortizacion"></tbody>
+              </table>
+            </div>
+          </div>
+
           <div style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:12px;padding:14px 18px;font-size:12px;color:#92400e;margin-top:16px;">
             <i class="fa-solid fa-triangle-exclamation me-2"></i>
             <strong>Importante:</strong> Al confirmar, aceptas las condiciones del crédito. El administrador revisará tu solicitud y te notificará.
@@ -316,15 +334,17 @@
     document.getElementById('mainContent').classList.toggle('sidebar-collapsed-layout');
   }
   // Update next button on last step
-  const origNext = window.nextStep;
-  window.nextStep = function() {
-    if (step === 4) { showStep(5); renderResumenFinal(); updateNav(); return; }
+  window.nextStep = async function() {
+    if (step === 4) { 
+      if (!(await validateStep(step))) return;
+      showStep(5); renderResumenFinal(); updateNav(); return; 
+    }
     if (step === 5) {
       const chk = document.getElementById('confirmCheck');
       if (!chk || !chk.checked) { Swal.fire({ title: 'Confirmación requerida', text: 'Marca la casilla de confirmación para continuar.', icon: 'warning', confirmButtonColor: '#F59E0B' }); return; }
       confirmarSolicitud(); return;
     }
-    if (!validateStep(step)) return;
+    if (!(await validateStep(step))) return;
     showStep(step + 1); updateNav();
   };
   function updateNav() {
