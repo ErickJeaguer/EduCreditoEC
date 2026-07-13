@@ -168,7 +168,7 @@ function prevStep() {
   if (step > 1) showStep(step - 1);
 }
 
-function validateStep(s) {
+async function validateStep(s) {
   if (s === 1) {
     const f = document.getElementById('regFacultad')?.value;
     const c = document.getElementById('regCarrera')?.value;
@@ -198,32 +198,47 @@ function validateStep(s) {
       Swal.fire({ title: 'Motivo requerido', text: 'Describe brevemente el motivo del préstamo (mínimo 10 caracteres).', icon: 'warning', confirmButtonColor: '#F59E0B' });
       return false;
     }
+    const bNombre = document.getElementById('bancoNombre')?.value;
+    const bTipo   = document.getElementById('bancoTipo')?.value;
+    const bCuenta = document.getElementById('bancoCuenta')?.value?.trim();
+    if (!bNombre || !bTipo || !bCuenta) {
+      Swal.fire({ title: 'Cuenta bancaria', text: 'Por favor, completa los datos de tu cuenta bancaria donde recibiremos el depósito.', icon: 'warning', confirmButtonColor: '#F59E0B' });
+      return false;
+    }
   }
   if (s === 4) {
-    const fields = ['garanteNombre','garanteCedula','garanteRelacion','garanteTelefono','garanteDireccion','garanteOcupacion'];
-    for (const f of fields) {
-      const val = document.getElementById(f)?.value?.trim();
-      if (!val) {
-        Swal.fire({ title: 'Campos requeridos', text: 'Completa todos los datos del garante.', icon: 'warning', confirmButtonColor: '#F59E0B' });
-        return false;
-      }
+    const email = document.getElementById('garanteEmail')?.value?.trim();
+    const relacion = document.getElementById('garanteRelacion')?.value;
+    
+    if (!email || !relacion) {
+      Swal.fire({ title: 'Campos requeridos', text: 'Ingresa el correo del garante y tu relación/parentesco.', icon: 'warning', confirmButtonColor: '#F59E0B' });
+      return false;
     }
-    // Validar cédula del garante
-    if (typeof EduValidations !== 'undefined') {
-      const ced = document.getElementById('garanteCedula')?.value?.trim();
-      const r = EduValidations.validateCedula(ced);
-      if (!r.valid) {
-        Swal.fire({ title: 'Cédula inválida', text: r.message, icon: 'error', confirmButtonColor: '#EF4444' });
+
+    Swal.fire({ title: 'Verificando garante...', text: 'Buscando al usuario en el sistema.', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+    try {
+      const usuarios = await EduAPI.get('Usuarios');
+      const garante = usuarios.find(u => u.correo.toLowerCase() === email.toLowerCase());
+      
+      if (!garante) {
+        Swal.fire({ title: 'Garante no encontrado', text: 'No existe ningún usuario registrado con ese correo. El garante debe estar registrado en EduCrédito EC.', icon: 'error', confirmButtonColor: '#EF4444' });
         return false;
       }
+      
+      // Save guarantor data temporarily to use in the summary
+      window.garanteData = garante;
+      Swal.close();
+    } catch(err) {
+      Swal.fire({ title: 'Error', text: 'No se pudo verificar al garante. Intenta de nuevo.', icon: 'error', confirmButtonColor: '#EF4444' });
+      return false;
     }
   }
   return true;
 }
 
 function actualizarResumen() {
-  const rates = { 7: 5, 15: 7, 30: 10 };
-  const tasa  = rates[selectedDays] || 7;
+  const rates = { 15: 5, 30: 7, 45: 9, 60: 12 };
+  const tasa  = rates[selectedDays] || 5;
   const interes = parseFloat((selectedAmount * (tasa / 100)).toFixed(2));
   const total   = parseFloat((selectedAmount + interes).toFixed(2));
   const hoy    = new Date();
@@ -241,16 +256,20 @@ function actualizarResumen() {
 }
 
 function renderResumenFinal() {
-  const rates = { 7: 5, 15: 7, 30: 10 };
-  const tasa  = rates[selectedDays] || 7;
+  const rates = { 15: 5, 30: 7, 45: 9, 60: 12 };
+  const tasa  = rates[selectedDays] || 5;
   const interes = parseFloat((selectedAmount * (tasa / 100)).toFixed(2));
   const total   = parseFloat((selectedAmount + interes).toFixed(2));
   const hoy    = new Date();
   const vence  = new Date(hoy.getTime() + selectedDays * 86400000);
   const fmt    = d => d.toLocaleDateString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric' });
 
-  const garante = document.getElementById('garanteNombre')?.value || 'N/A';
+  const garante = window.garanteData ? window.garanteData.nombre : 'N/A';
   const motivo  = document.getElementById('motivo')?.value || 'N/A';
+  
+  const bNombre = document.getElementById('bancoNombre')?.value || 'N/A';
+  const bTipo   = document.getElementById('bancoTipo')?.value || 'N/A';
+  const bCuenta = document.getElementById('bancoCuenta')?.value || 'N/A';
 
   const container = document.getElementById('resumenFinal');
   if (!container) return;
@@ -265,10 +284,53 @@ function renderResumenFinal() {
         <div class="col-12"><hr style="border-color:#E5E7EB;margin:4px 0;"></div>
         <div class="col-md-6"><div class="result-row"><span class="result-label" style="font-weight:700;">Total a pagar</span><span class="result-value" style="color:#2563EB;font-size:22px;font-weight:800;">$${total.toFixed(2)}</span></div></div>
         <div class="col-md-6"><div class="result-row"><span class="result-label">Fecha límite</span><span class="result-value" style="color:#EF4444;">${fmt(vence)}</span></div></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Motivo</span><span class="result-value">${motivo}</span></div></div>
         <div class="col-md-6"><div class="result-row"><span class="result-label">Garante</span><span class="result-value">${garante}</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Cuenta Depósito</span><span class="result-value">${bNombre} (${bCuenta})</span></div></div>
       </div>
     </div>`;
+    
+  // Renderizar la tabla de amortización
+  const tablaAmortizacion = document.getElementById('tablaAmortizacion');
+  if (tablaAmortizacion) {
+    const cronograma = generarCronograma(hoy, selectedDays, total);
+    let html = '';
+    cronograma.forEach((c, idx) => {
+      html += `<tr><td>${idx + 1}</td><td>${c.fecha}</td><td style="font-weight:600;">$${c.monto.toFixed(2)}</td></tr>`;
+    });
+    tablaAmortizacion.innerHTML = html;
+  }
+}
+
+function generarCronograma(fechaInicio, dias, total) {
+  let cronograma = [];
+  let currentDate = new Date(fechaInicio.getTime());
+  const fechaFin = new Date(fechaInicio.getTime() + dias * 86400000);
+  
+  // Encontrar el primer jueves
+  while (currentDate.getDay() !== 4) { // 4 es Jueves en getDay()
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  // Agregar todos los jueves hasta la fecha de fin
+  while (currentDate <= fechaFin) {
+    cronograma.push(new Date(currentDate.getTime()));
+    currentDate.setDate(currentDate.getDate() + 7);
+  }
+  
+  // Si no se encontró ningún jueves (poco probable), se fuerza un pago al final
+  if (cronograma.length === 0) {
+    cronograma.push(new Date(fechaFin.getTime()));
+  }
+  
+  // Dividir el monto equitativamente
+  const cuota = total / cronograma.length;
+  const fmt = d => d.toLocaleDateString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric' });
+  
+  return cronograma.map(date => ({
+    fecha: fmt(date),
+    monto: parseFloat(cuota.toFixed(2)),
+    estado: 'Pendiente'
+  }));
 }
 
 async function confirmarSolicitud() {
@@ -295,8 +357,8 @@ async function confirmarSolicitud() {
     }
   });
 
-  const rates = { 7: 5, 15: 7, 30: 10 };
-  const tasa   = rates[selectedDays] || 7;
+  const rates = { 15: 5, 30: 7, 45: 9, 60: 12 };
+  const tasa   = rates[selectedDays] || 5;
   const interes = parseFloat((selectedAmount * (tasa / 100)).toFixed(2));
   const total   = parseFloat((selectedAmount + interes).toFixed(2));
   const hoy    = new Date();
@@ -304,9 +366,17 @@ async function confirmarSolicitud() {
   const fmt    = d => d.toLocaleDateString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric' });
 
   const user   = EduUtils.getFromStorage('educredito_user') || {};
-  const garante = document.getElementById('garanteNombre')?.value || 'N/A';
-  const garanteCedula = document.getElementById('garanteCedula')?.value || 'N/A';
+  const garanteNombre = window.garanteData ? window.garanteData.nombre : 'N/A';
+  const garanteCedula = window.garanteData ? window.garanteData.cedula : 'N/A';
+  const garanteCorreo = window.garanteData ? window.garanteData.correo : 'N/A';
+  const garanteRelacion = document.getElementById('garanteRelacion')?.value || 'N/A';
   const motivo  = document.getElementById('motivo')?.value || 'N/A';
+  
+  const bNombre = document.getElementById('bancoNombre')?.value || 'N/A';
+  const bTipo   = document.getElementById('bancoTipo')?.value || 'N/A';
+  const bCuenta = document.getElementById('bancoCuenta')?.value || 'N/A';
+  
+  const cronograma = generarCronograma(hoy, selectedDays, total);
 
   // Guardar la información académica del usuario (Actualizando BD)
   const f = document.getElementById('regFacultad')?.value;
@@ -360,8 +430,14 @@ async function confirmarSolicitud() {
     fecha_solicitud: fmt(hoy),
     estado: 'Pendiente',
     motivo: motivo,
-    garante_nombre: garante,
+    garante_nombre: garanteNombre,
     garante_cedula: garanteCedula,
+    garante_correo: garanteCorreo,
+    garante_relacion: garanteRelacion,
+    banco_nombre: bNombre,
+    banco_tipo: bTipo,
+    banco_cuenta: bCuenta,
+    cronograma: JSON.stringify(cronograma),
     enlace_certificado: enlace_certificado
   };
 
