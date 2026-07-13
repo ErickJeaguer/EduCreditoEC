@@ -85,10 +85,10 @@
               <span id="rangeDays">15</span> días
             </div>
             <div class="range-wrap">
-              <input type="range" id="simRange" min="0" max="2" step="1" value="1" />
+              <input type="range" id="simRange" min="0" max="3" step="1" value="0" />
             </div>
             <div class="d-flex justify-content-between mt-2" style="font-size:11px;color:#9CA3AF;font-weight:600;">
-              <span>7 días</span><span>15 días</span><span>30 días</span>
+              <span>15 días</span><span>30 días</span><span>45 días</span><span>60 días</span>
             </div>
           </div>
         </div>
@@ -109,7 +109,14 @@
             </div>
           </div>
           
-          <button class="btn w-100" style="background:#0F8B6D;color:#fff;border-radius:10px;padding:14px;font-weight:700;font-size:15px;margin-top:30px;" onclick="solicitarDesdeSimulador()">
+          <div>
+            <div style="font-size:12px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px;">Cronograma de Pagos (Jueves)</div>
+            <div id="simAmortizacion" style="font-size:12px; background:rgba(255,255,255,.05); border-radius:10px; padding:10px; margin-bottom:20px;">
+              <!-- Se llena con JS -->
+            </div>
+          </div>
+          
+          <button class="btn w-100" style="background:#0F8B6D;color:#fff;border-radius:10px;padding:14px;font-weight:700;font-size:15px;margin-top:10px;" onclick="solicitarDesdeSimulador()">
             <i class="fa-solid fa-paper-plane me-2"></i>Solicitar este crédito
           </button>
         </div>
@@ -123,9 +130,9 @@
 <script src="../js/utils.js"></script>
 <script src="../js/app.js"></script>
 <script>
-  let m=5, d=15;
-  const rates = {7:5, 15:7, 30:10};
-  const dMap = [7, 15, 30];
+  let m=15, d=15;
+  const rates = {15:5, 30:7, 45:9, 60:12};
+  const dMap = [15, 30, 45, 60];
 
   document.querySelectorAll('.amount-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -149,6 +156,42 @@
     document.getElementById('resTasa').textContent = `${t}%`;
     document.getElementById('resInteres').textContent = `$${i.toFixed(2)}`;
     document.getElementById('resTotal').textContent = `$${tot.toFixed(2)}`;
+    
+    // Generar cronograma simulado
+    const hoy = new Date();
+    const cronograma = generarCronograma(hoy, d, tot);
+    const amDiv = document.getElementById('simAmortizacion');
+    let html = '<div style="display:flex; justify-content:space-between; font-weight:700; border-bottom:1px solid rgba(255,255,255,.2); padding-bottom:6px; margin-bottom:6px;"><span>Fecha</span><span>Monto</span></div>';
+    cronograma.forEach(c => {
+      html += `<div style="display:flex; justify-content:space-between; padding:4px 0; color:rgba(255,255,255,.9);"><span>${c.fecha}</span><span style="color:#86efac; font-weight:600;">$${c.monto.toFixed(2)}</span></div>`;
+    });
+    amDiv.innerHTML = html;
+  }
+
+  function generarCronograma(fechaInicio, dias, total) {
+    let cronograma = [];
+    let currentDate = new Date(fechaInicio.getTime());
+    const fechaFin = new Date(fechaInicio.getTime() + dias * 86400000);
+    
+    // Encontrar el primer jueves
+    while (currentDate.getDay() !== 4) { // 4 = Jueves
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    while (currentDate <= fechaFin) {
+      cronograma.push(new Date(currentDate.getTime()));
+      currentDate.setDate(currentDate.getDate() + 7);
+    }
+    
+    if (cronograma.length === 0) cronograma.push(new Date(fechaFin.getTime()));
+    
+    const cuota = total / cronograma.length;
+    const fmt = date => date.toLocaleDateString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric' });
+    
+    return cronograma.map(date => ({
+      fecha: fmt(date),
+      monto: parseFloat(cuota.toFixed(2))
+    }));
   }
 
   function solicitarDesdeSimulador() {
