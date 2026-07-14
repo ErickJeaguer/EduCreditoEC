@@ -167,16 +167,12 @@
         <!-- PASO 2: Monto -->
         <div class="form-step table-wrapper p-4" id="step2">
           <h3 style="font-size:16px;font-weight:700;color:var(--color-text-primary);margin-bottom:4px;"><i class="fa-solid fa-dollar-sign me-2 text-success"></i>Selecciona el monto</h3>
-          <p class="small mb-4" style="color:var(--color-text-secondary) !important;">Elige el monto que necesitas. Máximo $25 por solicitud.</p>
-          <div class="row g-3 mb-4">
-            <div class="col" data-amount="5"><button class="amount-btn" data-amount="5">$5</button></div>
-            <div class="col" data-amount="10"><button class="amount-btn" data-amount="10">$10</button></div>
-            <div class="col" data-amount="15"><button class="amount-btn active" data-amount="15">$15</button></div>
-            <div class="col" data-amount="20"><button class="amount-btn" data-amount="20">$20</button></div>
-            <div class="col" data-amount="25"><button class="amount-btn" data-amount="25">$25</button></div>
+          <p class="small mb-4" style="color:var(--color-text-secondary) !important;">Elige el monto que necesitas. El máximo depende de tu EduScore.</p>
+          <div class="row g-3 mb-4" id="amountButtonsContainer">
+            <!-- Buttons generated dynamically in js/loan.js -->
           </div>
-          <div style="background:#F0F9FF;border:1px solid #BFDBFE;border-radius:10px;padding:12px 16px;font-size:12px;color:#1e40af;">
-            <i class="fa-solid fa-circle-info me-2"></i>El monto máximo disponible es <strong>$25</strong>. Solo puedes tener un crédito activo a la vez.
+          <div style="background:#F0F9FF;border:1px solid #BFDBFE;border-radius:10px;padding:12px 16px;font-size:12px;color:#1e40af;" id="amountInfoMessage">
+            <i class="fa-solid fa-circle-info me-2"></i>El monto máximo disponible es <strong>$25</strong>. Mejora tu EduScore para desbloquear más monto.
           </div>
         </div>
 
@@ -250,7 +246,7 @@
             <div class="table-scroll">
               <table class="table-custom" style="font-size:13px;">
                 <thead>
-                  <tr><th># Cuota</th><th>Fecha de pago</th><th>Monto</th></tr>
+                  <tr><th style="padding-right: 15px;"># Cuota</th><th style="padding-right: 15px;">Fecha de pago</th><th>Monto</th></tr>
                 </thead>
                 <tbody id="tablaAmortizacion"></tbody>
               </table>
