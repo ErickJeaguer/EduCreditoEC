@@ -155,9 +155,14 @@ function quitarArchivo() {
 async function enviarPago() {
   const ref = document.getElementById('referencia')?.value?.trim();
   const met = document.getElementById('metodoPago')?.value;
+  const montoInput = document.getElementById('montoPago')?.value;
+  const monto = parseFloat(montoInput);
 
   if (!met) {
     Swal.fire({ title: 'Selecciona el método de pago', icon: 'warning', confirmButtonColor: '#F59E0B' }); return;
+  }
+  if (!montoInput || isNaN(monto) || monto <= 0) {
+    Swal.fire({ title: 'Monto inválido', text: 'Ingresa una cantidad válida mayor a 0.', icon: 'warning', confirmButtonColor: '#F59E0B' }); return;
   }
   if (!ref) {
     Swal.fire({ title: 'Número de referencia requerido', text: 'Ingresa el número de transacción o referencia del pago.', icon: 'warning', confirmButtonColor: '#F59E0B' }); return;
@@ -171,6 +176,11 @@ async function enviarPago() {
   const loan  = (loans || []).find(l => l.estado === 'Activo');
   if (!loan) {
     Swal.fire({ title: 'Sin préstamo activo', icon: 'info' }); return;
+  }
+  
+  const saldoPendiente = parseFloat(loan.saldo || loan.total);
+  if (monto > saldoPendiente) {
+    Swal.fire({ title: 'Monto excedido', text: `El pago ($${monto.toFixed(2)}) no puede ser mayor al saldo pendiente ($${saldoPendiente.toFixed(2)}).`, icon: 'warning', confirmButtonColor: '#F59E0B' }); return;
   }
 
   Swal.fire({
@@ -204,7 +214,7 @@ async function enviarPago() {
     id:          EduUtils.generateId(),
     id_prestamo: loan.id,
     id_estudiante: user.id,
-    monto:       parseFloat(loan.saldo || loan.total),
+    monto:       monto,
     fecha_pago:  new Date().toLocaleDateString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric' }),
     metodo:      met,
     referencia:  ref,
