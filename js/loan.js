@@ -318,15 +318,15 @@ function renderResumenFinal() {
     <div class="card-custom p-4">
       <h5 class="mb-4" style="color:#1F2937;font-weight:700;"><i class="fa-solid fa-receipt me-2 text-primary"></i>Resumen de la solicitud</h5>
       <div class="row g-3">
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Monto solicitado</span><span class="result-value" style="color:#0F8B6D;font-size:20px;font-weight:800;">$${selectedAmount.toFixed(2)}</span></div></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Plazo</span><span class="result-value">${selectedDays} días</span></div></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Tasa de interés</span><span class="result-value">${tasa}%</span></div></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Interés</span><span class="result-value" style="color:#F59E0B;">$${interes.toFixed(2)}</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Monto solicitado: </span><span class="result-value" style="color:#0F8B6D;font-size:20px;font-weight:800;">$${selectedAmount.toFixed(2)}</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Plazo: </span><span class="result-value">${selectedDays} días</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Tasa de interés: </span><span class="result-value">${tasa}%</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Interés: </span><span class="result-value" style="color:#F59E0B;">$${interes.toFixed(2)}</span></div></div>
         <div class="col-12"><hr style="border-color:#E5E7EB;margin:4px 0;"></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label" style="font-weight:700;">Total a pagar</span><span class="result-value" style="color:#2563EB;font-size:22px;font-weight:800;">$${total.toFixed(2)}</span></div></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Fecha límite</span><span class="result-value" style="color:#EF4444;">${fmt(vence)}</span></div></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Garante</span><span class="result-value">${garante}</span></div></div>
-        <div class="col-md-6"><div class="result-row"><span class="result-label">Cuenta Depósito</span><span class="result-value">${bNombre} (${bCuenta})</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label" style="font-weight:700;">Total a pagar: </span><span class="result-value" style="color:#2563EB;font-size:22px;font-weight:800;">$${total.toFixed(2)}</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Fecha límite: </span><span class="result-value" style="color:#EF4444;">${fmt(vence)}</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Garante: </span><span class="result-value">${garante}</span></div></div>
+        <div class="col-md-6"><div class="result-row"><span class="result-label">Cuenta Depósito: </span><span class="result-value">${bNombre} (${bCuenta})</span></div></div>
       </div>
     </div>`;
     
