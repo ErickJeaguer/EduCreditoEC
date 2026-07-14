@@ -134,6 +134,29 @@
       <a href="payments.html" class="btn btn-danger btn-sm">Pagar ahora</a>
     </div>
 
+    <!-- EduScore Card -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="table-wrapper p-4 d-flex align-items-center flex-wrap gap-4" style="background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); border-left: 5px solid #10B981;">
+          <div style="width: 140px; height: 140px; position: relative;">
+            <canvas id="eduScoreChart"></canvas>
+            <div style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+              <span id="eduScoreValue" style="font-size: 24px; font-weight: 800; color: #1F2937; line-height: 1;">500</span>
+              <div style="font-size: 10px; color: #6B7280; font-weight: 700; text-transform: uppercase;">EduScore</div>
+            </div>
+          </div>
+          <div class="flex-grow-1">
+            <h3 style="font-size: 18px; font-weight: 800; color: #0F8B6D; margin-bottom: 8px;">Nivel <span id="eduScoreLevel">Bronce</span></h3>
+            <p style="font-size: 14px; color: #4B5563; margin-bottom: 12px;" id="eduScoreMessage">Sigue pagando a tiempo para subir de nivel y desbloquear mejores préstamos.</p>
+            <div class="progress" style="height: 8px; background-color: #E5E7EB; border-radius: 4px;">
+              <div class="progress-bar" id="eduScoreProgress" role="progressbar" style="width: 50%; background-color: #10B981;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div style="font-size: 11px; color: #9CA3AF; margin-top: 6px; text-align: right;" id="eduScoreNextLevel">Faltan 150 pts para Plata</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- KPI Cards -->
     <div class="stats-row mb-4">
       <div class="stat-card green">
