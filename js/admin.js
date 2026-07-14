@@ -238,7 +238,7 @@ window.EduAdmin = (() => {
     const p = cachePayments.find(x => x.id === id);
     if(p) p.estado = 'Verificado';
 
-    // Actualizar el estado del préstamo
+    // Actualizar el estado del préstamo y EduScore
     if (p && p.id_prestamo) {
       const loan = cacheLoans.find(l => l.id === p.id_prestamo);
       if (loan) {
@@ -247,6 +247,15 @@ window.EduAdmin = (() => {
         const updateLoan = { saldo: nuevoSaldo };
         if (nuevoSaldo <= 0) {
           updateLoan.estado = 'Pagado';
+          
+          // Premio por pagar completo: +50 EduScore
+          const student = cacheStudents.find(s => s.id === loan.id_estudiante);
+          if (student) {
+            let currentScore = parseInt(student.eduscore) || 500;
+            currentScore = Math.min(850, currentScore + 50);
+            await EduAPI.patch('Usuarios', student.id, { eduscore: currentScore });
+            student.eduscore = currentScore;
+          }
         }
         await EduAPI.patch('Prestamos', loan.id, updateLoan);
         Object.assign(loan, updateLoan);
@@ -268,7 +277,19 @@ window.EduAdmin = (() => {
     Swal.fire({ title: 'Procesando...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
     await EduAPI.patch('Pagos', id, { estado: 'Rechazado', motivo });
     const p = cachePayments.find(x => x.id === id);
-    if(p) { p.estado = 'Rechazado'; p.motivo = motivo; }
+    if(p) { 
+      p.estado = 'Rechazado'; 
+      p.motivo = motivo; 
+      
+      // Castigo por pago falso/rechazado: -20 EduScore
+      const student = cacheStudents.find(s => s.id === p.id_estudiante);
+      if (student) {
+        let currentScore = parseInt(student.eduscore) || 500;
+        currentScore = Math.max(300, currentScore - 20);
+        await EduAPI.patch('Usuarios', student.id, { eduscore: currentScore });
+        student.eduscore = currentScore;
+      }
+    }
 
     Swal.fire({ title: 'Rechazado', icon: 'info', confirmButtonColor: '#EF4444' });
     renderTablaPagos('tbodyPagos');
