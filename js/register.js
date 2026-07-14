@@ -197,7 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
           semestre:     '',
           seccion:      '',
           password:     btoa(formData.password), // Se guarda en hash básico para simular DB
-          rol:          'student'
+          rol:          'student',
+          eduscore:     500
         };
 
         const result = await EduAPI.post('Usuarios', newUser);
