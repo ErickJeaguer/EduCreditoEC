@@ -1,5 +1,5 @@
 window.EduAPI = {
-  SHEETDB_URL: 'https://sheetdb.io/api/v1/p43al9vk917ym',
+  SHEETDB_URL: 'https://sheetdb.io/api/v1/xbwaopomvxqql',
   APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzSytsp6TRAno-cokMO3TTQMCiU5HFN29DiwFXyJMrH-Tv_7-g1r4yWm-ajOeRM_gCo0A/exec',
 
   // Obtener datos (lee una hoja entera o busca por parámetros)
