@@ -76,8 +76,98 @@ document.addEventListener('DOMContentLoaded', async () => {
       </div>`;
   }
 
+  // EduScore Logic
+  const eduScore = parseInt(user.eduscore) || 500;
+  const eduScoreValueEl = document.getElementById('eduScoreValue');
+  const eduScoreLevelEl = document.getElementById('eduScoreLevel');
+  const eduScoreMessageEl = document.getElementById('eduScoreMessage');
+  const eduScoreProgressEl = document.getElementById('eduScoreProgress');
+  const eduScoreNextLevelEl = document.getElementById('eduScoreNextLevel');
+  const eduScoreChartEl = document.getElementById('eduScoreChart');
+
+  if (eduScoreValueEl) {
+    eduScoreValueEl.textContent = eduScore;
+    
+    let level = 'Bronce';
+    let color = '#F59E0B'; // Yellow
+    let message = 'Sigue pagando a tiempo para subir de nivel y desbloquear mejores préstamos.';
+    let nextLevelScore = 650;
+    let nextLevelName = 'Plata';
+    
+    if (eduScore < 500) {
+      level = 'Riesgo';
+      color = '#EF4444'; // Red
+      message = 'Tu puntaje ha bajado. Paga tus cuotas a tiempo para recuperarlo.';
+      nextLevelScore = 500;
+      nextLevelName = 'Bronce';
+    } else if (eduScore >= 650 && eduScore < 750) {
+      level = 'Plata';
+      color = '#94A3B8'; // Silver
+      message = '¡Excelente! Has desbloqueado préstamos de mayor monto y mejores tasas.';
+      nextLevelScore = 750;
+      nextLevelName = 'Oro';
+    } else if (eduScore >= 750) {
+      level = 'Oro';
+      color = '#F59E0B'; // Gold
+      message = '¡Felicidades! Eres un usuario premium. Tienes acceso a todos los beneficios.';
+      nextLevelScore = 850;
+      nextLevelName = 'Max';
+    }
+    
+    eduScoreLevelEl.textContent = level;
+    eduScoreLevelEl.style.color = color;
+    eduScoreMessageEl.textContent = message;
+    
+    // Progress bar calculation
+    let progress = 100;
+    let falta = 0;
+    if (eduScore < 850) {
+      const minScore = nextLevelScore === 500 ? 300 : (nextLevelScore === 650 ? 500 : (nextLevelScore === 750 ? 650 : 750));
+      const range = nextLevelScore - minScore;
+      const current = eduScore - minScore;
+      progress = (current / range) * 100;
+      falta = nextLevelScore - eduScore;
+      eduScoreNextLevelEl.textContent = `Faltan ${falta} pts para ${nextLevelName}`;
+    } else {
+      eduScoreNextLevelEl.textContent = 'Has alcanzado el puntaje máximo';
+    }
+    
+    eduScoreProgressEl.style.width = `${progress}%`;
+    eduScoreProgressEl.style.backgroundColor = color;
+    
+    // Chart
+    if (eduScoreChartEl && typeof Chart !== 'undefined') {
+      // Normalize score between 300 and 850
+      const scoreNormalized = Math.max(300, Math.min(850, eduScore));
+      const percentage = (scoreNormalized - 300) / (850 - 300);
+      
+      new Chart(eduScoreChartEl, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [percentage * 100, (1 - percentage) * 100],
+            backgroundColor: [color, '#F3F4F6'],
+            borderWidth: 0,
+            circumference: 180,
+            rotation: 270,
+            cutout: '80%',
+            borderRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
+          },
+          animation: { animateRotate: true, animateScale: false }
+        }
+      });
+    }
+  }
+
   // Mini chart
-  const chartEl = document.getElementById('miniChart');
   if (chartEl && typeof Chart !== 'undefined') {
     const meses = ['Feb','Mar','Abr','May','Jun','Jul'];
     const data  = [0, 15, 0, 20, 25, payments.reduce((s,p)=>s+parseFloat(p.monto||0),0) || 10];
