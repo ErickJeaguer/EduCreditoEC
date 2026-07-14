@@ -478,6 +478,8 @@ async function confirmarSolicitud() {
     banco_nombre: bNombre,
     banco_tipo: bTipo,
     banco_cuenta: bCuenta,
+    tasa: tasa,
+    fechaVencimiento: fmt(vence),
     cronograma: JSON.stringify(cronograma),
     enlace_certificado: enlace_certificado
   };
