@@ -131,14 +131,28 @@
       tbody.innerHTML = ''; emptyEl.style.display='block'; return;
     }
     emptyEl.style.display='none';
-    tbody.innerHTML = lista.map(l=>`
+    tbody.innerHTML = lista.map(l => {
+      const rates = { 15: 5, 30: 7, 45: 9, 60: 12 };
+      const tasaFallback = l.tasa || rates[l.plazo] || 5;
+      
+      let fVence = l.fechaVencimiento;
+      if (!fVence && l.fecha_solicitud) {
+        const parts = l.fecha_solicitud.split('/');
+        if (parts.length === 3) {
+           const d = new Date(parts[2], parts[1]-1, parts[0]);
+           d.setDate(d.getDate() + parseInt(l.plazo));
+           fVence = d.toLocaleDateString('es-EC', { day:'2-digit', month:'2-digit', year:'numeric' });
+        } else { fVence = 'Por definir'; }
+      } else if (!fVence) { fVence = 'Por definir'; }
+
+      return `
       <tr>
         <td><span style="font-size:11px;color:#9CA3AF;font-family:monospace;">#${l.id.toUpperCase()}</span></td>
         <td style="font-weight:700;color:#0F8B6D;font-size:15px;">$${parseFloat(l.monto).toFixed(2)}</td>
-        <td>${l.plazo} días · ${l.tasa}%</td>
+        <td>${l.plazo} días · ${tasaFallback}%</td>
         <td style="color:#F59E0B;">$${parseFloat(l.interes).toFixed(2)}</td>
         <td style="font-weight:700;">$${parseFloat(l.total).toFixed(2)}</td>
-        <td>${l.fechaVencimiento}</td>
+        <td>${fVence}</td>
         <td>${BADGES[l.estado]||l.estado}</td>
         <td>
           <div class="table-actions">
