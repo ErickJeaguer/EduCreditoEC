@@ -9,7 +9,7 @@
 window.EduSimulation = (() => {
 
   /* ─── Tasas por defecto (se leen de localStorage/settings) ─── */
-  const DEFAULT_RATES = { 7: 5, 15: 7, 30: 10 };
+  const DEFAULT_RATES = { 15: 5, 30: 7, 45: 9, 60: 12 };
   const DEFAULT_AMOUNTS = [5, 10, 15, 20, 25];
 
   let selectedAmount = 15;
@@ -45,7 +45,7 @@ window.EduSimulation = (() => {
    */
   function calcularPrestamo(capital, dias) {
     const rates = getRates();
-    const tasa  = rates[dias] ?? 7;
+    const tasa  = rates[dias] ?? 5;
     const interes = parseFloat((capital * (tasa / 100)).toFixed(2));
     const total   = parseFloat((capital + interes).toFixed(2));
 
