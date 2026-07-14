@@ -34,7 +34,13 @@ window.EduAPI = {
     try {
       const res = await fetch(url);
       if (!res.ok) throw new Error('Error en la red');
-      return await res.json();
+      const data = await res.json();
+      
+      // La nueva API devuelve un objeto con la propiedad "value" que contiene el array
+      if (data && data.value && Array.isArray(data.value)) {
+        return data.value;
+      }
+      return data;
     } catch (e) {
       console.error('Error in API GET', e);
       return [];
