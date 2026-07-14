@@ -1,16 +1,35 @@
 window.EduAPI = {
-  SHEETDB_URL: 'https://sheetdb.io/api/v1/xbwaopomvxqql',
-  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzSytsp6TRAno-cokMO3TTQMCiU5HFN29DiwFXyJMrH-Tv_7-g1r4yWm-ajOeRM_gCo0A/exec',
+  // Ahora usaremos exclusivamente Apps Script. No más SheetDB.
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxPSQQsvJkWG3rw8ftX9KuqURZa48uiSP50TDkxm6i1XS2j4aJKG9Auu1riocBIGTvkkA/exec',
+
+  /**
+   * Asegura que siempre usemos Apps Script y con el método adecuado para saltar el CORS
+   * enviando las solicitudes POST como text/plain
+   */
+  async _fetchAppsScript(payload) {
+    if (!this.APPS_SCRIPT_URL) {
+      console.error("Falta configurar APPS_SCRIPT_URL");
+      return null;
+    }
+    try {
+      const res = await fetch(this.APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      return await res.json();
+    } catch (e) {
+      console.error('Error in Apps Script fetch', e);
+      return { error: e.message };
+    }
+  },
 
   // Obtener datos (lee una hoja entera o busca por parámetros)
-  // sheetName: 'Usuarios', 'Prestamos', 'Pagos'
   async get(sheetName, searchParams = null) {
-    let url = `${this.SHEETDB_URL}?sheet=${sheetName}`;
+    let url = `${this.APPS_SCRIPT_URL}?sheet=${sheetName}`;
     if (searchParams) {
-      // La API de SheetDB permite buscar: /search?sheet=Usuarios&email=...
-      url = `${this.SHEETDB_URL}/search?sheet=${sheetName}&`;
       const query = new URLSearchParams(searchParams).toString();
-      url += query;
+      url += `&${query}`;
     }
     try {
       const res = await fetch(url);
@@ -22,60 +41,32 @@ window.EduAPI = {
     }
   },
 
-  // Crear registro
+  // Crear registro nuevo
   async post(sheetName, data) {
-    try {
-      const res = await fetch(`${this.SHEETDB_URL}?sheet=${sheetName}`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data })
-      });
-      return await res.json();
-    } catch (e) {
-      console.error('Error in API POST', e);
-      return { error: e.message };
-    }
+    return this._fetchAppsScript({
+      action: 'post',
+      sheet: sheetName,
+      data: data
+    });
   },
 
-  // Actualizar registro (buscando por columna 'id')
+  // Actualizar registro existente (simulando PATCH a través de POST)
   async patch(sheetName, id, data) {
-    try {
-      const res = await fetch(`${this.SHEETDB_URL}/id/${id}?sheet=${sheetName}`, {
-        method: 'PATCH',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data })
-      });
-      return await res.json();
-    } catch (e) {
-      console.error('Error in API PATCH', e);
-      return { error: e.message };
-    }
+    return this._fetchAppsScript({
+      action: 'patch',
+      sheet: sheetName,
+      id: id,
+      data: data
+    });
   },
 
-  // Subir archivo a Google Drive (vía Apps Script)
+  // Subir archivo a Google Drive
   async uploadFile(base64, filename, mimeType) {
-    if (!this.APPS_SCRIPT_URL) {
-      console.warn("Atención: Aún no se ha configurado la URL de Apps Script. Simulando subida...");
-      return new Promise(resolve => setTimeout(() => resolve({ success: true, url: 'https://drive.google.com/file/d/MOCK_ENLACE/view' }), 1500));
-    }
-    
-    try {
-      const res = await fetch(this.APPS_SCRIPT_URL, {
-        method: 'POST',
-        // Usamos text/plain para evitar el error de preflight CORS en Apps Script
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ base64, filename, mimeType })
-      });
-      return await res.json();
-    } catch (e) {
-      console.error('Error en la subida de archivo', e);
-      return { success: false, error: e.message };
-    }
+    return this._fetchAppsScript({
+      action: 'upload',
+      base64: base64,
+      filename: filename,
+      mimeType: mimeType
+    });
   }
 };
